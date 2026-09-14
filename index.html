@@ -1,0 +1,621 @@
+<title>BBQガイド</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --ground:#f6f4ef; --panel:#ffffff; --ink:#221f1b; --ink-soft:#5f584e;
+  --line:#e5ded2; --line-strong:#d8cfbf;
+  --ember:#bb3b2c; --ember-ink:#7a2418; --ember-bg:#fbeae5;
+  --sea:#0f6e66; --sea-ink:#0a534d; --sea-bg:#e4f1ef;
+  --amber:#c67512;
+  --shadow:0 1px 0 rgba(34,31,27,.04), 0 8px 24px -18px rgba(34,31,27,.5);
+  --maxw:480px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#181512; --panel:#221e1a; --ink:#f2ede3; --ink-soft:#b3a998;
+    --line:#332d26; --line-strong:#42392f;
+    --ember:#e8735f; --ember-ink:#f4b7ab; --ember-bg:#2c1a16;
+    --sea:#4fb5aa; --sea-ink:#8fd6cd; --sea-bg:#12241f;
+    --amber:#e0a24a;
+    --shadow:0 1px 0 rgba(0,0,0,.2), 0 10px 26px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#181512; --panel:#221e1a; --ink:#f2ede3; --ink-soft:#b3a998;
+  --line:#332d26; --line-strong:#42392f;
+  --ember:#e8735f; --ember-ink:#f4b7ab; --ember-bg:#2c1a16;
+  --sea:#4fb5aa; --sea-ink:#8fd6cd; --sea-bg:#12241f;
+  --amber:#e0a24a;
+  --shadow:0 1px 0 rgba(0,0,0,.2), 0 10px 26px -18px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Noto Sans JP","Noto Sans TC","Noto Sans KR",system-ui,sans-serif;
+  font-size:16px; line-height:1.7; letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 16px; padding-block:0}
+h1,h2,h3{font-family:"Zen Kaku Gothic New","Noto Sans JP",system-ui,sans-serif; margin:0; text-wrap:balance; line-height:1.3}
+p{margin:0}
+a{color:var(--sea-ink)}
+:focus-visible{outline:2.5px solid var(--sea); outline-offset:2px; border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important; transition:none!important}}
+html{scroll-behavior:smooth}
+
+.top{position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--ground) 88%, transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+.top .wrap{display:flex; align-items:center; justify-content:space-between; gap:10px; height:52px}
+.brand{display:flex; align-items:center; gap:8px; min-width:0}
+.brand .mk{font-size:18px; flex:none}
+.brand b{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:15px; letter-spacing:.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.langs{display:flex; gap:2px; background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:3px; flex:none}
+.langs button{appearance:none; border:0; background:transparent; color:var(--ink-soft); font:inherit; font-weight:700; font-size:12px; padding:5px 9px; border-radius:999px; cursor:pointer; line-height:1}
+.langs button[aria-pressed="true"]{background:var(--ink); color:var(--ground)}
+
+.hero{padding-block:20px 8px}
+.eyebrow{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:700; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--sea-ink)}
+.hero h1{font-weight:900; font-size:26px; margin-top:6px}
+.hero .sub{color:var(--ink-soft); font-size:14px; margin-top:6px}
+
+.warn{margin-top:16px; background:var(--ember-bg); border:1px solid color-mix(in srgb,var(--ember) 35%,var(--line)); border-radius:16px; padding:16px 15px 15px; box-shadow:var(--shadow)}
+.warn .wh{display:flex; align-items:center; gap:8px; color:var(--ember-ink); font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:15px; letter-spacing:.02em}
+.warn ul{list-style:none; margin:12px 0 0; padding:0; display:flex; flex-direction:column; gap:10px}
+.warn li{display:flex; gap:10px; align-items:flex-start; font-size:14.5px; line-height:1.55}
+.warn li .ic{flex:none; width:22px; height:22px; border-radius:7px; background:var(--ember); color:#fff; display:grid; place-items:center; font-size:13px; margin-top:1px}
+.warn li b{font-weight:700}
+
+.toc{position:sticky; top:52px; z-index:15; background:color-mix(in srgb,var(--ground) 90%, transparent); backdrop-filter:blur(8px); margin-top:18px; padding-block:10px; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+.toc .row{display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none}
+.toc .row::-webkit-scrollbar{display:none}
+.toc a{flex:none; text-decoration:none; color:var(--ink); background:var(--panel); border:1px solid var(--line-strong); border-radius:999px; padding:7px 12px; font-size:13px; font-weight:700; display:flex; align-items:center; gap:6px; white-space:nowrap}
+.toc a .n{color:var(--sea-ink); font-variant-numeric:tabular-nums}
+
+main{padding-block:6px 40px}
+section{scroll-margin-top:112px; padding-top:26px}
+.sec-head{display:flex; align-items:baseline; gap:10px}
+.sec-head .n{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:13px; color:var(--sea-ink); font-variant-numeric:tabular-nums; letter-spacing:.05em}
+.sec-head h2{font-weight:700; font-size:19px}
+.card{margin-top:12px; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:var(--shadow)}
+.card + .card{margin-top:10px}
+.lead{color:var(--ink-soft); font-size:14px; margin-top:8px}
+.subh{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:15px; color:var(--ink)}
+.subh + p, .subh + .slot{margin-top:8px}
+
+.rows{display:flex; flex-direction:column; gap:0}
+.pr{display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:11px 0; border-bottom:1px dashed var(--line-strong)}
+.pr:last-child{border-bottom:0}
+.pr .k{font-weight:700; font-size:14.5px}
+.pr .v{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:17px; font-variant-numeric:tabular-nums; white-space:nowrap}
+.pr .v small{font-weight:700; font-size:12px; color:var(--ink-soft)}
+
+.pay{display:flex; flex-direction:column; gap:9px; margin-top:14px}
+.pay a{display:flex; align-items:center; justify-content:space-between; gap:10px; text-decoration:none; background:var(--sea); color:#fff; border-radius:12px; padding:14px 16px; font-weight:800; font-size:15px; box-shadow:var(--shadow)}
+.pay a .arw{font-size:18px; opacity:.9}
+.paynote{display:flex; gap:8px; align-items:flex-start; margin-top:12px; color:var(--ember-ink); font-size:13px; background:var(--ember-bg); border-radius:10px; padding:10px 12px}
+
+.roompick{margin-top:14px; background:var(--sea-bg); border:1px solid color-mix(in srgb,var(--sea) 30%,var(--line)); border-radius:12px; padding:14px}
+.roompick .rt{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:14px; color:var(--sea-ink); text-align:center}
+.roompick .opts{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
+.roompick .opts button{flex:1 1 40%; appearance:none; cursor:pointer; font:inherit; font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:18px; color:#fff; background:var(--sea); border:0; border-radius:11px; padding:16px 10px; box-shadow:var(--shadow)}
+.roombadge{display:flex; align-items:center; gap:10px; background:var(--sea-bg); border:1px solid color-mix(in srgb,var(--sea) 30%,var(--line)); border-radius:11px; padding:10px 14px}
+.roombadge .rl{font-size:12px; font-weight:700; color:var(--sea-ink); letter-spacing:.04em; flex:none}
+.roombadge .rv{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:20px; color:var(--sea-ink); flex:1}
+.roombadge .chg{appearance:none; border:0; background:transparent; color:var(--sea-ink); font:inherit; font-size:12px; font-weight:700; text-decoration:underline; cursor:pointer; padding:4px; flex:none}
+
+.bul{list-style:none; margin:6px 0 0; padding:0; display:flex; flex-direction:column; gap:9px}
+.bul li{display:flex; gap:10px; font-size:14.5px; line-height:1.55}
+.bul li::before{content:""; flex:none; width:7px; height:7px; border-radius:50%; background:var(--sea); margin-top:8px}
+.bul li.no::before{background:var(--ember)}
+.bul li.strong{font-weight:800; color:var(--ember-ink)}
+
+.slot{margin-top:10px; border:1.5px dashed color-mix(in srgb,var(--amber) 55%,var(--line)); background:color-mix(in srgb,var(--amber) 8%,var(--panel)); border-radius:10px; padding:12px 13px; color:var(--ink-soft); font-size:13.5px; display:flex; gap:9px; align-items:flex-start}
+.slot .stag{flex:none; font-size:10px; font-weight:800; letter-spacing:.06em; color:var(--amber); border:1px solid color-mix(in srgb,var(--amber) 45%,var(--line)); border-radius:5px; padding:2px 6px; margin-top:1px; white-space:nowrap}
+.photo{margin-top:10px; border:1.5px dashed var(--line-strong); border-radius:12px; padding:22px 12px; text-align:center; color:var(--ink-soft); font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px}
+.photo .pi{font-size:22px}
+.notebox{margin-top:10px; background:var(--ember-bg); border:1px solid color-mix(in srgb,var(--ember) 30%,var(--line)); border-radius:10px; padding:11px 13px; color:var(--ember-ink); font-size:13.5px; font-weight:700; display:flex; gap:8px; align-items:flex-start}
+.vid{display:flex; align-items:center; gap:13px; margin-top:12px; text-decoration:none; background:var(--panel); border:1px solid var(--line-strong); border-radius:12px; padding:13px 14px; box-shadow:var(--shadow)}
+.vid .play{flex:none; width:42px; height:42px; border-radius:11px; background:var(--ember); color:#fff; display:grid; place-items:center; font-size:16px}
+.vid .vtext{display:flex; flex-direction:column; min-width:0}
+.vid .vtext b{color:var(--ink); font-weight:800; font-size:14.5px}
+.vid .vtext small{color:var(--ink-soft); font-size:12px; margin-top:2px}
+
+/* property picker */
+.pick{padding-block:26px 40px}
+.pick .card{padding:18px}
+.pick h2{font-weight:900; font-size:20px}
+.pick .pn{color:var(--ink-soft); font-size:13.5px; margin-top:8px}
+.pick .opts{display:flex; flex-direction:column; gap:9px; margin-top:14px}
+.pick .opts button{appearance:none; cursor:pointer; text-align:left; font:inherit; font-family:"Zen Kaku Gothic New",sans-serif; font-weight:800; font-size:15px; color:var(--ink); background:var(--panel); border:1px solid var(--line-strong); border-radius:11px; padding:14px 15px; box-shadow:var(--shadow)}
+
+footer{border-top:1px solid var(--line); padding-block:20px 34px; color:var(--ink-soft); font-size:12px; text-align:center}
+[hidden]{display:none!important}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap">
+
+<div class="top">
+  <div class="wrap">
+    <div class="brand"><span class="mk">🔥</span><b id="brand"></b></div>
+    <div class="langs" role="group" aria-label="Language">
+      <button data-lang="ja" aria-pressed="true">日</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+      <button data-lang="zh" aria-pressed="false">繁</button>
+      <button data-lang="ko" aria-pressed="false">한</button>
+    </div>
+  </div>
+</div>
+
+<!-- property picker (shown when ?p= missing/invalid) -->
+<div class="pick wrap" id="propPick" hidden>
+  <div class="card">
+    <h2 data-t="pickPropTitle"></h2>
+    <p class="pn" data-t="pickPropNote"></p>
+    <div class="opts" id="propOpts"></div>
+  </div>
+</div>
+
+<header class="hero" id="hero">
+  <div class="wrap">
+    <div class="eyebrow" data-t="eyebrow"></div>
+    <h1 id="title"></h1>
+    <p class="sub" id="subtitle"></p>
+
+    <div class="warn" role="note">
+      <div class="wh"><span>⚠️</span><span data-t="warnTitle"></span></div>
+      <ul>
+        <li><span class="ic">¥</span><span><b data-t="w1"></b></span></li>
+        <li><span class="ic">!</span><span><b data-t="w2"></b></span></li>
+        <li><span class="ic">🧹</span><span><b data-t="w3"></b></span></li>
+        <li id="warnTime"><span class="ic">⏱</span><span><b data-t="w4"></b></span></li>
+        <li id="warnStore"><span class="ic">🔑</span><span><b id="w5b"></b></span></li>
+        <li><span class="ic">🗑</span><span><b data-t="w6"></b></span></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="目次" id="toc">
+  <div class="wrap"><div class="row">
+    <a href="#pay"><span class="n">01</span><span data-t="s1"></span></a>
+    <a href="#items"><span class="n">02</span><span data-t="s2"></span></a>
+    <a href="#place"><span class="n">03</span><span data-t="s3"></span></a>
+    <a href="#charcoal"><span class="n">04</span><span data-t="s4"></span></a>
+    <a href="#fire"><span class="n">05</span><span data-t="s5"></span></a>
+    <a href="#gomi"><span class="n">06</span><span data-t="s6"></span></a>
+    <a href="#clean"><span class="n">07</span><span data-t="s7"></span></a>
+    <a href="#notes"><span class="n">08</span><span data-t="s8"></span></a>
+  </div></div>
+</nav>
+
+<main class="wrap" id="body">
+  <section id="pay">
+    <div class="sec-head"><span class="n">01</span><h2 data-t="s1"></h2></div>
+    <div class="card">
+      <div class="rows">
+        <div class="pr"><div class="k" data-t="p_bbq"></div><div class="v">¥5,000</div></div>
+        <div class="pr" id="rowCharcoal"><div class="k" data-t="p_charcoal"></div><div class="v">+¥1,500 <small data-t="opt"></small></div></div>
+        <div class="pr"><div class="k" data-t="p_clean"></div><div class="v">+¥2,500 <small data-t="opt"></small></div></div>
+      </div>
+      <p class="lead" data-t="pay_cardnote"></p>
+      <div class="roompick" id="roomPick" hidden><div class="rt"></div><div class="opts"></div></div>
+      <div class="pay" id="payArea"></div>
+      <div class="paynote"><span>❗</span><span data-t="payNote"></span></div>
+    </div>
+  </section>
+
+  <section id="items">
+    <div class="sec-head"><span class="n">02</span><h2 data-t="s2"></h2></div>
+    <div class="card">
+      <ul class="bul"><li id="i1"></li></ul>
+      <p class="lead" id="iNote"></p>
+    </div>
+  </section>
+
+  <section id="place">
+    <div class="sec-head"><span class="n">03</span><h2 data-t="s3"></h2></div>
+    <div class="card">
+      <h3 class="subh" data-t="pl_area_h"></h3>
+      <div class="notebox" id="noBackyard" hidden><span>🚫</span><span data-t="no_backyard"></span></div>
+      <div class="slot"><span class="stag">物件別</span><span data-t="pl_area_slot"></span></div>
+      <div class="photo"><span class="pi">📷</span><span data-t="pl_area_photo"></span></div>
+    </div>
+    <div class="card">
+      <h3 class="subh" data-t="pl_store_h"></h3>
+      <p id="storeBody"></p>
+      <p class="lead" id="plPin"></p>
+    </div>
+  </section>
+
+  <section id="charcoal">
+    <div class="sec-head"><span class="n">04</span><h2 data-t="s4"></h2></div>
+    <div class="card">
+      <p class="lead" data-t="ch_lead"></p>
+      <a class="vid" href="https://www.youtube.com/watch?v=pgsyBXWpqd0" target="_blank" rel="noopener">
+        <span class="play">▶</span>
+        <span class="vtext"><b data-t="ch_vtitle"></b><small data-t="ch_vnote"></small></span>
+      </a>
+    </div>
+  </section>
+
+  <section id="fire">
+    <div class="sec-head"><span class="n">05</span><h2 data-t="s5"></h2></div>
+    <div class="card">
+      <ul class="bul">
+        <li data-t="f1"></li>
+        <li data-t="f2"></li>
+        <li class="no strong" data-t="f3"></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="gomi">
+    <div class="sec-head"><span class="n">06</span><h2 data-t="s6"></h2></div>
+    <div class="card">
+      <p class="lead" data-t="g_lead"></p>
+      <div class="slot"><span class="stag">物件別</span><span data-t="g_slot"></span></div>
+      <ul class="bul"><li class="no" data-t="g_meat"></li></ul>
+      <div class="photo"><span class="pi">📷</span><span data-t="g_photo"></span></div>
+    </div>
+  </section>
+
+  <section id="clean">
+    <div class="sec-head"><span class="n">07</span><h2 data-t="s7"></h2></div>
+    <div class="card">
+      <ul class="bul">
+        <li id="c1"></li>
+        <li id="c2li"><span id="c2"></span></li>
+      </ul>
+      <div class="slot"><span class="stag">物件別</span><span data-t="c_wash"></span></div>
+      <p class="lead" data-t="c_daiko"></p>
+    </div>
+  </section>
+
+  <section id="notes">
+    <div class="sec-head"><span class="n">08</span><h2 data-t="s8"></h2></div>
+    <div class="card">
+      <ul class="bul">
+        <li data-t="n1"></li>
+        <li data-t="n2"></li>
+        <li class="no" data-t="n3"></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap"><span data-t="foot"></span></footer>
+
+<script>
+const T = {
+  ja:{
+    brandTail:"BBQガイド", eyebrow:"BBQ機材レンタル", title:"BBQのご案内", subTail:"　ご利用前に必ずお読みください。",
+    warnTitle:"はじめに（必ずお読みください）",
+    w1:"ご使用の直前にお支払いください。事前申し込みは不要・お支払い後の返金はできません。",
+    w2:"お支払いせずに使用された場合、後日 通常の1.5倍（¥7,500）をご請求します。",
+    w3:"片付けをされない場合、追加で ¥5,000 の清掃料がかかります。",
+    w4:"",
+    w5:"保管庫の暗証番号は、お支払い完了画面に表示されます。",
+    w5_note:"ご利用方法は現地の張り紙をご確認ください。",
+    w6:"ゴミは分別をして、指定の場所に捨ててください。",
+    s1:"支払い方法", s2:"用意されているもの", s3:"場所", s4:"炭の付け方（参考）",
+    s5:"火の処理", s6:"ゴミ", s7:"片付け方", s8:"注意事項",
+    p_bbq:"BBQ機材レンタル", p_charcoal:"炭の追加（3kg）", p_clean:"片付け代行", opt:"任意",
+    pay_cardnote:"カード決済のみ。ご予約者以外の名義でもお支払いいただけます。",
+    payNote:"ご使用の直前にお支払いください。事前申し込みは不要・お支払い後の返金はできません。",
+    payBtn:"この機材を支払う（{room}）", payBtn1:"この機材を支払う", pickTitle:"お部屋を選んでください", roomLabel:"お部屋", change:"変更",
+    i1:"BBQ機材一式・炭（3kg）", i1_elec:"BBQ機材一式（電気式・炭は不要）",
+    i_note:"※炭が足りない場合は、追加の炭（¥1,500 / 3kg）をご購入ください。",
+    pl_area_h:"BBQをしていい場所", pl_area_slot:"（物件ごとの場所の説明が入ります）", pl_area_photo:"エリア図・写真（差し込み予定）",
+    no_backyard:"この物件は敷地内でのBBQはできません。指定の場所でご利用ください。",
+    pl_store_h:"機材の保管場所", pl_store_slot:"（物件ごとの保管場所の説明が入ります）",
+    pl_pin:"保管ボックスの暗証番号は、お支払い完了画面に表示されます。",
+    pl_pin_note:"保管庫の鍵はありません。ご利用方法は現地の張り紙をご確認ください。",
+    ch_lead:"初めての方は、こちらの動画が参考になります（着火剤を使った火起こし）。",
+    ch_vtitle:"かんたん火起こし講座（たけだバーベキュー）", ch_vnote:"YouTubeで開きます",
+    f1:"火をおこす前に、消火用のバケツに水を用意してください。",
+    f2:"使用後は火を完全に消してください。炭は冷めるまで時間がかかるため、触る前に必ず冷ましてください。",
+    f3:"熱いまま片付けないでください。完全に冷めてから戻してください（火災の危険）。",
+    g_lead:"ゴミの分別・捨てる場所・捨て方は物件ごとに異なります。",
+    g_slot:"（物件ごとのゴミルールが入ります）",
+    g_meat:"生ゴミは必ず室内に入れてください。屋外に残すと野生動物に荒らされることがあります。",
+    g_photo:"外ゴミ箱の案内（写真差し込み予定）",
+    c1:"網・炭は捨ててください。", c1_elec:"ホットプレートは専用のスポンジで洗って干してください。",
+    c2:"BBQ機材はスポンジできれいに洗ってください。",
+    c_wash:"洗い場：（物件ごとの指定が入ります）",
+    c_daiko:"「片付け代行」をご購入の場合は、そのまま置いていただいて結構です。",
+    n1:"沖縄は天候が変わりやすいため、当日の天候をご確認ください。",
+    n2:"食材を置きっぱなしにしないでください（野生動物が荒らすことがあります）。",
+    n3:"火の取り扱いには十分ご注意ください。事故・火災について当館は責任を負いかねます。",
+    pickPropTitle:"物件を選んでください", pickPropNote:"本来はお部屋のQRコードから開きます。物件が分からない場合はスタッフへお声がけください。",
+    foot:"民泊運営 インバウンド株式会社"
+  },
+  en:{
+    brandTail:"BBQ Guide", eyebrow:"BBQ Equipment Rental", title:"BBQ Guide", subTail:" — please read before you start.",
+    warnTitle:"Please read first",
+    w1:"Pay right before use. No advance booking needed; no refunds after payment.",
+    w2:"If you use the equipment without paying, we will bill you 1.5× the normal price (¥7,500) afterward.",
+    w3:"If you don't clean up, an extra cleaning fee of ¥5,000 applies.",
+    w4:"",
+    w5:"The storage passcode is shown on your payment-complete screen.",
+    w5_note:"Please follow the printed notice on site for how to use.",
+    w6:"Sort your trash and dispose of it in the designated place.",
+    s1:"Payment", s2:"What's provided", s3:"Location", s4:"Lighting charcoal (reference)",
+    s5:"Putting out the fire", s6:"Trash", s7:"Cleaning up", s8:"Notes",
+    p_bbq:"BBQ equipment rental", p_charcoal:"Extra charcoal (3kg)", p_clean:"Cleanup service", opt:"optional",
+    pay_cardnote:"Card payment only. Anyone may pay — not only the person who booked.",
+    payNote:"Please pay right before use. No advance booking needed; no refunds after payment.",
+    payBtn:"Pay for this equipment ({room})", payBtn1:"Pay for this equipment", pickTitle:"Select your room", roomLabel:"Your room", change:"Change",
+    i1:"Full BBQ set · charcoal (3kg)", i1_elec:"Full BBQ set (electric — no charcoal needed)",
+    i_note:"If you run low on charcoal, please buy more (¥1,500 / 3kg).",
+    pl_area_h:"Where you may BBQ", pl_area_slot:"(Per-property details go here)", pl_area_photo:"Area map / photo (to be added)",
+    no_backyard:"BBQ is not allowed on the property grounds. Please use the designated place.",
+    pl_store_h:"Where the equipment is stored", pl_store_slot:"(Per-property storage location goes here)",
+    pl_pin:"The storage box passcode appears on your payment-complete screen.",
+    pl_pin_note:"There is no storage lock. Please follow the printed notice on site.",
+    ch_lead:"New to this? This video is a helpful reference (lighting charcoal with a fire starter).",
+    ch_vtitle:"Easy fire-starting guide (Japanese)", ch_vnote:"Opens on YouTube",
+    f1:"Before lighting the fire, prepare a bucket of water for extinguishing.",
+    f2:"After use, put the fire out completely. Charcoal takes time to cool — always let it cool before touching.",
+    f3:"Never put it away hot. Return it only after it has fully cooled (fire hazard).",
+    g_lead:"Trash sorting, disposal location and method differ by property.",
+    g_slot:"(Per-property trash rules go here)",
+    g_meat:"Always bring food waste indoors. Leaving it outside can attract wild animals.",
+    g_photo:"Outdoor bin guide (photo to be added)",
+    c1:"Throw away the grill net and charcoal.", c1_elec:"Wash the hot plate with the dedicated sponge and let it dry.",
+    c2:"Wash the BBQ equipment clean with a sponge.",
+    c_wash:"Washing area: (per-property location goes here)",
+    c_daiko:"If you bought the “Cleanup service”, just leave everything as is.",
+    n1:"Okinawa weather changes fast — please check the day's forecast.",
+    n2:"Don't leave food unattended (wild animals may get into it).",
+    n3:"Handle fire with great care. We cannot be liable for accidents or fire.",
+    pickPropTitle:"Select your property", pickPropNote:"Normally you open this from the QR code in your room. If unsure, please ask staff.",
+    foot:"Minpaku Operations · Inbound Inc."
+  },
+  zh:{
+    brandTail:"BBQ指南", eyebrow:"BBQ器材租借", title:"BBQ使用指南", subTail:"　使用前請務必閱讀。",
+    warnTitle:"請先閱讀",
+    w1:"請於使用前付款。無需事先預約；付款後恕不退款。",
+    w2:"若未付款即使用，事後將收取通常費用的1.5倍（¥7,500）。",
+    w3:"若未整理清潔，將另收 ¥5,000 清潔費。",
+    w4:"",
+    w5:"保管箱密碼會顯示在付款完成畫面上。",
+    w5_note:"使用方式請參考現場張貼的說明。",
+    w6:"垃圾請分類後丟至指定地點。",
+    s1:"付款方式", s2:"提供物品", s3:"位置", s4:"生火方式（參考）",
+    s5:"熄火處理", s6:"垃圾", s7:"整理清潔", s8:"注意事項",
+    p_bbq:"BBQ器材租借", p_charcoal:"追加木炭（3kg）", p_clean:"清潔代辦", opt:"選填",
+    pay_cardnote:"僅限信用卡付款。預約者以外的名義亦可付款。",
+    payNote:"請於使用前付款。無需事先預約；付款後恕不退款。",
+    payBtn:"支付此器材（{room}）", payBtn1:"支付此器材", pickTitle:"請選擇您的房間", roomLabel:"房間", change:"變更",
+    i1:"BBQ整組・木炭（3kg）", i1_elec:"BBQ整組（電力式・無需木炭）",
+    i_note:"※木炭不足時，請加購木炭（¥1,500 / 3kg）。",
+    pl_area_h:"可BBQ的地點", pl_area_slot:"（各物件說明將填入此處）", pl_area_photo:"區域圖／照片（預定插入）",
+    no_backyard:"本物件不可在庭院內BBQ。請於指定地點使用。",
+    pl_store_h:"器材保管處", pl_store_slot:"（各物件保管處說明將填入此處）",
+    pl_pin:"保管箱密碼會顯示在付款完成畫面。",
+    pl_pin_note:"無保管箱鎖。使用方式請參考現場張貼的說明。",
+    ch_lead:"初次使用者可參考此影片（使用助燃劑生火）。",
+    ch_vtitle:"簡易生火教學（日語）", ch_vnote:"於 YouTube 開啟",
+    f1:"生火前，請準備一桶滅火用的水。",
+    f2:"使用後請將火完全熄滅。木炭需要時間冷卻，觸摸前務必冷卻。",
+    f3:"請勿在高溫狀態下收拾。完全冷卻後再收回（火災危險）。",
+    g_lead:"垃圾分類、丟棄地點與方式因物件而異。",
+    g_slot:"（各物件垃圾規則將填入此處）",
+    g_meat:"廚餘請務必放入室內。留在戶外可能會招來野生動物。",
+    g_photo:"戶外垃圾桶說明（預定插入照片）",
+    c1:"請丟棄烤網與木炭。", c1_elec:"請用專用海綿清洗電烤盤並晾乾。",
+    c2:"請用海綿將BBQ器材清洗乾淨。",
+    c_wash:"清洗處：（各物件指定將填入此處）",
+    c_daiko:"若已購買「清潔代辦」，維持原樣即可。",
+    n1:"沖繩天氣多變，請確認當日天氣。",
+    n2:"請勿放置食材不管（野生動物可能會翻找）。",
+    n3:"請小心用火。本館對事故與火災恕不負責。",
+    pickPropTitle:"請選擇物件", pickPropNote:"通常請由房內的QR碼開啟。若不確定，請洽詢服務人員。",
+    foot:"民宿營運 · Inbound Inc."
+  },
+  ko:{
+    brandTail:"BBQ 안내", eyebrow:"BBQ 장비 렌탈", title:"BBQ 이용 안내", subTail:"　사용 전 반드시 읽어 주세요.",
+    warnTitle:"먼저 읽어 주세요",
+    w1:"사용 직전에 결제해 주세요. 사전 예약 불필요, 결제 후 환불 불가.",
+    w2:"결제하지 않고 사용하시면 추후 통상 요금의 1.5배(¥7,500)를 청구합니다.",
+    w3:"정리하지 않으면 추가로 ¥5,000의 청소비가 부과됩니다.",
+    w4:"",
+    w5:"보관함 비밀번호는 결제 완료 화면에 표시됩니다.",
+    w5_note:"이용 방법은 현장의 안내문을 확인해 주세요.",
+    w6:"쓰레기는 분리하여 지정된 장소에 버려 주세요.",
+    s1:"결제 방법", s2:"제공 물품", s3:"위치", s4:"숯 붙이는 법(참고)",
+    s5:"불 처리", s6:"쓰레기", s7:"정리 방법", s8:"주의 사항",
+    p_bbq:"BBQ 장비 렌탈", p_charcoal:"숯 추가(3kg)", p_clean:"정리 대행", opt:"선택",
+    pay_cardnote:"카드 결제만 가능. 예약자 외 명의로도 결제할 수 있습니다.",
+    payNote:"사용 직전에 결제해 주세요. 사전 예약 불필요, 결제 후 환불 불가.",
+    payBtn:"이 장비 결제({room})", payBtn1:"이 장비 결제", pickTitle:"객실을 선택하세요", roomLabel:"객실", change:"변경",
+    i1:"BBQ 세트・숯(3kg)", i1_elec:"BBQ 세트(전기식・숯 불필요)",
+    i_note:"※숯이 부족하면 추가 숯(¥1,500 / 3kg)을 구매해 주세요.",
+    pl_area_h:"BBQ 가능 장소", pl_area_slot:"（물건별 설명이 들어갑니다）", pl_area_photo:"구역도・사진(삽입 예정)",
+    no_backyard:"본 물건은 부지 내에서 BBQ를 할 수 없습니다. 지정된 장소에서 이용해 주세요.",
+    pl_store_h:"장비 보관 장소", pl_store_slot:"（물건별 보관 장소 설명이 들어갑니다）",
+    pl_pin:"보관함 비밀번호는 결제 완료 화면에 표시됩니다.",
+    pl_pin_note:"보관함 잠금은 없습니다. 이용 방법은 현장의 안내문을 확인해 주세요.",
+    ch_lead:"처음이신 분은 이 영상을 참고하세요(착화제를 사용한 불 붙이기).",
+    ch_vtitle:"쉬운 불 붙이기 강좌(일본어)", ch_vnote:"YouTube에서 열립니다",
+    f1:"불을 붙이기 전에 소화용 물통에 물을 준비해 주세요.",
+    f2:"사용 후에는 불을 완전히 꺼 주세요. 숯은 식는 데 시간이 걸리므로 만지기 전에 반드시 식혀 주세요.",
+    f3:"뜨거운 상태로 정리하지 마세요. 완전히 식은 후에 되돌려 주세요(화재 위험).",
+    g_lead:"쓰레기 분리·버리는 장소·방법은 물건마다 다릅니다.",
+    g_slot:"（물건별 쓰레기 규칙이 들어갑니다）",
+    g_meat:"음식물 쓰레기는 반드시 실내에 두세요. 실외에 두면 야생동물이 헤집을 수 있습니다.",
+    g_photo:"실외 쓰레기통 안내(사진 삽입 예정)",
+    c1:"석쇠・숯은 버려 주세요.", c1_elec:"핫플레이트는 전용 스펀지로 씻어 말려 주세요.",
+    c2:"BBQ 장비는 스펀지로 깨끗이 씻어 주세요.",
+    c_wash:"세척 장소：（물건별 지정이 들어갑니다）",
+    c_daiko:"‘정리 대행’을 구매하신 경우 그대로 두셔도 됩니다.",
+    n1:"오키나와는 날씨 변화가 큽니다. 당일 날씨를 확인해 주세요.",
+    n2:"식재료를 방치하지 마세요(야생동물이 헤집을 수 있습니다).",
+    n3:"불 취급에 각별히 주의해 주세요. 사고·화재에 대해 당관은 책임을 지지 않습니다.",
+    pickPropTitle:"물건을 선택하세요", pickPropNote:"보통은 객실의 QR코드로 여십니다. 잘 모르시면 직원에게 문의해 주세요.",
+    foot:"민박 운영 · Inbound Inc."
+  }
+};
+
+/* Per-property config. QR codes are printed per property (?p=) and per room (?room=).
+   charcoal:false = electric (no charcoal option). passcode:false = 526 (张り紙, no lock). */
+const PROPS = {
+  "526":{ order:1, name:{ja:"Villa HI inn 526",en:"Villa HI inn 526",zh:"Villa HI inn 526",ko:"Villa HI inn 526"},
+    rooms:{ main:{label:"526", link:"https://square.link/u/49Bo8TGW"} }, charcoal:false, electric:true, passcode:false },
+  kiseki:{ order:2, name:{ja:"キセキハウス",en:"Kiseki House",zh:"Kiseki House",ko:"Kiseki House"},
+    rooms:{ east:{label:"EAST", link:"https://square.link/u/FjvfjPoE"}, west:{label:"WEST", link:"https://square.link/u/JyFTibuA"} },
+    charcoal:true, electric:false, passcode:true,
+    store:{ja:"階段下に備品、外側ウッドデッキ内にコンロを収納しています。両方ご利用ください。",
+           en:"BBQ supplies are under the stairs, and the grill is inside the outer wood deck. You'll need both.",
+           zh:"BBQ用品收納在樓梯下，烤爐收納在外側木甲板內。兩者皆需使用。",
+           ko:"계단 아래에 BBQ 용품, 바깥쪽 우드데크 안에 그릴이 보관되어 있습니다. 둘 다 이용해 주세요."} },
+  higashie:{ order:3, name:{ja:"名護ビーチサイドハウス（東江）",en:"Nago Beachside House (Agarie)",zh:"名護海濱之家（東江）",ko:"나고 비치사이드 하우스(아가리에)"},
+    rooms:{ pine:{label:"パイン", link:"https://square.link/u/Ukehzs1l"}, dolphin:{label:"イルカ", link:"https://square.link/u/7TPtQkTY"} },
+    charcoal:true, electric:false, passcode:true, noBackyard:true },
+  maravilla:{ order:4, name:{ja:"Mar a Villa NAKIJIN",en:"Mar a Villa NAKIJIN",zh:"Mar a Villa NAKIJIN",ko:"Mar a Villa NAKIJIN"},
+    rooms:{ main:{label:"BBQ", link:"https://square.link/u/3x4vT8nX"} }, charcoal:true, electric:false, passcode:true },
+  inori:{ order:5, name:{ja:"いのりリゾート〜空風〜",en:"Inori Resort ~Sorakaze~",zh:"いのりResort〜空風〜",ko:"이노리 리조트 ~소라카제~"},
+    rooms:{ main:{label:"BBQ", link:"https://square.link/u/AO0538um"} }, charcoal:true, electric:false, passcode:true },
+  hiro:{ order:6, name:{ja:"ぺんしょんHIRO",en:"Pension HIRO",zh:"民宿HIRO",ko:"펜션 HIRO"},
+    rooms:{ a:{label:"A", link:"https://square.link/u/jB7XM7pu"}, b:{label:"B", link:"https://square.link/u/kn4kRLiG"} },
+    charcoal:true, electric:false, passcode:true },
+  maeda:{ order:7, name:{ja:"CoastVilla恩納村真栄田",en:"CoastVilla Onna Maeda",zh:"CoastVilla恩納村真榮田",ko:"CoastVilla 온나손 마에다"},
+    rooms:{ om1:{label:"OM1", link:"https://square.link/u/6QQeuWai"}, om2:{label:"OM2", link:"https://square.link/u/3gAwaU3C"} },
+    charcoal:true, electric:false, passcode:true },
+  seesaa:{ order:8, name:{ja:"Garra rufa シーサー",en:"Garra rufa Seesaa",zh:"Garra rufa Seesaa",ko:"Garra rufa 시사"},
+    rooms:{ main:{label:"BBQ", link:"https://square.link/u/yM5tEq3g"} }, charcoal:true, electric:false, passcode:true }
+};
+
+let currentLang = "ja";
+const $ = id => document.getElementById(id);
+
+function getProp(){
+  const p = new URLSearchParams(location.search).get("p");
+  return (p && PROPS[p.toLowerCase()]) ? p.toLowerCase() : null;
+}
+function getRoom(P){
+  const r = new URLSearchParams(location.search).get("room");
+  return (r && P.rooms[r.toLowerCase()]) ? r.toLowerCase() : null;
+}
+function setParam(k,v){
+  const u = new URL(location.href);
+  if(v===null) u.searchParams.delete(k); else u.searchParams.set(k,v);
+  history.replaceState(null,"",u);
+  render(currentLang);
+}
+
+function fillText(lang){
+  const d = T[lang]; if(!d) return;
+  document.documentElement.lang = lang==="ja"?"ja":lang==="en"?"en":lang==="zh"?"zh-Hant":"ko";
+  document.querySelectorAll("[data-t]").forEach(el=>{
+    const v = d[el.getAttribute("data-t")];
+    el.textContent = (v===undefined? "" : v);
+    el.hidden = (v==="");
+  });
+  document.querySelectorAll(".langs button").forEach(b=>{
+    b.setAttribute("aria-pressed", b.dataset.lang===lang ? "true":"false");
+  });
+}
+
+function showPicker(lang){
+  const d = T[lang];
+  $("propPick").hidden = false;
+  $("hero").hidden = true; $("toc").hidden = true; $("body").hidden = true;
+  $("brand").textContent = d.brandTail;
+  const opts = $("propOpts"); opts.innerHTML = "";
+  Object.keys(PROPS).sort((a,b)=>PROPS[a].order-PROPS[b].order).forEach(k=>{
+    const b = document.createElement("button");
+    b.type="button"; b.textContent = PROPS[k].name[lang]||PROPS[k].name.ja;
+    b.addEventListener("click", ()=>setParam("p",k));
+    opts.appendChild(b);
+  });
+}
+
+function renderRoom(lang, P){
+  const d = T[lang];
+  const payArea = $("payArea"), roomPick = $("roomPick");
+  const keys = Object.keys(P.rooms);
+  payArea.innerHTML = "";
+  const single = keys.length === 1;
+  let rk = getRoom(P);
+  if(single) rk = keys[0];
+  if(rk){
+    roomPick.hidden = true;
+    const r = P.rooms[rk];
+    if(!single){
+      const badge = document.createElement("div");
+      badge.className = "roombadge";
+      badge.innerHTML = '<span class="rl"></span><span class="rv"></span><button type="button" class="chg"></button>';
+      badge.querySelector(".rl").textContent = d.roomLabel;
+      badge.querySelector(".rv").textContent = r.label;
+      const chg = badge.querySelector(".chg"); chg.textContent = d.change;
+      chg.addEventListener("click", ()=>setParam("room",null));
+      payArea.appendChild(badge);
+    }
+    const a = document.createElement("a");
+    a.href = r.link; a.rel="noopener";
+    a.innerHTML = '<span></span><span class="arw">→</span>';
+    a.querySelector("span").textContent = single ? d.payBtn1 : d.payBtn.replace("{room}", r.label);
+    payArea.appendChild(a);
+  } else {
+    roomPick.hidden = false;
+    roomPick.querySelector(".rt").textContent = d.pickTitle;
+    const opts = roomPick.querySelector(".opts"); opts.innerHTML = "";
+    keys.forEach(k=>{
+      const b = document.createElement("button");
+      b.type="button"; b.textContent = P.rooms[k].label;
+      b.addEventListener("click", ()=>setParam("room",k));
+      opts.appendChild(b);
+    });
+  }
+}
+
+function render(lang){
+  currentLang = lang;
+  fillText(lang);
+  const d = T[lang];
+  const pk = getProp();
+  if(!pk){ showPicker(lang); return; }
+  const P = PROPS[pk];
+  $("propPick").hidden = true; $("hero").hidden = false; $("toc").hidden = false; $("body").hidden = false;
+
+  const nm = P.name[lang] || P.name.ja;
+  $("brand").textContent = nm + "｜" + d.brandTail;
+  $("title").textContent = d.title;
+  $("subtitle").textContent = nm + d.subTail;
+
+  // warnings: time (optional), store/passcode variant
+  $("warnTime").hidden = !d.w4;
+  $("w5b").textContent = P.passcode ? d.w5 : d.w5_note;
+
+  // payment rows
+  $("rowCharcoal").hidden = !P.charcoal;
+
+  // items
+  $("i1").textContent = P.electric ? d.i1_elec : d.i1;
+  const iNote = $("iNote");
+  if(P.charcoal && !P.electric){ iNote.textContent = d.i_note; iNote.hidden = false; }
+  else { iNote.hidden = true; }
+
+  // place
+  $("noBackyard").hidden = !P.noBackyard;
+  const storeBody = $("storeBody");
+  if(P.store){ storeBody.textContent = P.store[lang] || P.store.ja; storeBody.style.color = ""; }
+  else { storeBody.textContent = d.pl_store_slot; storeBody.style.color = "var(--ink-soft)"; }
+  $("plPin").textContent = P.passcode ? d.pl_pin : d.pl_pin_note;
+
+  // clean
+  if(P.electric){ $("c1").textContent = d.c1_elec; $("c2li").hidden = true; }
+  else { $("c1").textContent = d.c1; $("c2li").hidden = false; $("c2").textContent = d.c2; }
+
+  renderRoom(lang, P);
+}
+
+document.querySelectorAll(".langs button").forEach(b=>{
+  b.addEventListener("click", ()=>{ render(b.dataset.lang); try{localStorage.setItem("bbqlang",b.dataset.lang);}catch(e){} });
+});
+let start="ja";
+try{ const s=localStorage.getItem("bbqlang"); if(s&&T[s]) start=s; }catch(e){}
+render(start);
+</script>
