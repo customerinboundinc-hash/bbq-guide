@@ -1,0 +1,181 @@
+<title>お支払い完了｜BBQ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --ground:#f6f4ef; --panel:#ffffff; --ink:#221f1b; --ink-soft:#5f584e;
+  --line:#e5ded2; --line-strong:#d8cfbf;
+  --ember:#bb3b2c; --ember-ink:#7a2418; --ember-bg:#fbeae5;
+  --sea:#0f6e66; --sea-ink:#0a534d; --sea-bg:#e4f1ef;
+  --amber:#c67512;
+  --shadow:0 1px 0 rgba(34,31,27,.04), 0 8px 24px -18px rgba(34,31,27,.5);
+  --maxw:480px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#181512; --panel:#221e1a; --ink:#f2ede3; --ink-soft:#b3a998;
+    --line:#332d26; --line-strong:#42392f;
+    --ember:#e8735f; --ember-ink:#f4b7ab; --ember-bg:#2c1a16;
+    --sea:#4fb5aa; --sea-ink:#8fd6cd; --sea-bg:#12241f;
+    --amber:#e0a24a;
+    --shadow:0 1px 0 rgba(0,0,0,.2), 0 10px 26px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#181512; --panel:#221e1a; --ink:#f2ede3; --ink-soft:#b3a998;
+  --line:#332d26; --line-strong:#42392f;
+  --ember:#e8735f; --ember-ink:#f4b7ab; --ember-bg:#2c1a16;
+  --sea:#4fb5aa; --sea-ink:#8fd6cd; --sea-bg:#12241f;
+  --amber:#e0a24a;
+  --shadow:0 1px 0 rgba(0,0,0,.2), 0 10px 26px -18px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Noto Sans JP","Noto Sans TC","Noto Sans KR",system-ui,sans-serif;
+  font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 16px}
+h1,h2,h3{font-family:"Zen Kaku Gothic New","Noto Sans JP",system-ui,sans-serif; margin:0; text-wrap:balance; line-height:1.3}
+p{margin:0}
+a{color:var(--sea-ink)}
+:focus-visible{outline:2.5px solid var(--sea); outline-offset:2px; border-radius:6px}
+
+.top{position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--ground) 88%, transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+.top .wrap{display:flex; align-items:center; justify-content:space-between; gap:10px; height:52px}
+.brand{display:flex; align-items:center; gap:8px; min-width:0}
+.brand .mk{font-size:18px; flex:none}
+.brand b{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:15px; letter-spacing:.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.langs{display:flex; gap:2px; background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:3px; flex:none}
+.langs button{appearance:none; border:0; background:transparent; color:var(--ink-soft); font:inherit; font-weight:700; font-size:12px; padding:5px 9px; border-radius:999px; cursor:pointer; line-height:1}
+.langs button[aria-pressed="true"]{background:var(--ink); color:var(--ground)}
+
+main{padding-block:30px 48px}
+.check{width:64px; height:64px; margin:0 auto; border-radius:50%; background:var(--sea-bg); color:var(--sea-ink); display:grid; place-items:center; font-size:34px}
+.thanks{text-align:center; font-weight:900; font-size:23px; margin-top:16px}
+.done{text-align:center; color:var(--ink-soft); font-size:14.5px; margin-top:8px}
+.prop{text-align:center; font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:15px; margin-top:10px}
+
+.pincard{margin-top:22px; background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:20px 18px; box-shadow:var(--shadow); text-align:center}
+.pincard .pl{font-size:12.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--sea-ink)}
+.pincard .pv{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:52px; letter-spacing:.14em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:6px; line-height:1.1}
+.pincard .ph{font-size:13.5px; color:var(--ink-soft); margin-top:8px}
+.pincard.nopin{background:var(--ember-bg); border-color:color-mix(in srgb,var(--ember) 30%,var(--line))}
+.pincard.nopin .np{color:var(--ember-ink); font-size:15px; font-weight:700; line-height:1.55}
+
+.mbtn{display:flex; align-items:center; justify-content:center; gap:8px; margin-top:16px; text-decoration:none; background:var(--sea); color:#fff; border-radius:13px; padding:15px 16px; font-weight:800; font-size:15.5px; box-shadow:var(--shadow)}
+.foot{margin-top:26px; text-align:center; color:var(--ink-soft); font-size:12px}
+[hidden]{display:none!important}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap">
+
+<div class="top">
+  <div class="wrap">
+    <div class="brand"><span class="mk">🔥</span><b data-t="brand"></b></div>
+    <div class="langs" role="group" aria-label="Language">
+      <button data-lang="ja" aria-pressed="true">日</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+      <button data-lang="zh" aria-pressed="false">繁</button>
+      <button data-lang="ko" aria-pressed="false">한</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="check">✓</div>
+  <h1 class="thanks" data-t="thanks"></h1>
+  <p class="done" data-t="done"></p>
+  <p class="prop" id="prop"></p>
+
+  <div class="pincard" id="pinCard">
+    <div class="pl" data-t="pinLabel"></div>
+    <div class="pv" id="pinValue"></div>
+    <div class="ph" data-t="pinHelp"></div>
+  </div>
+  <div class="pincard nopin" id="noPinCard" hidden>
+    <div class="np" data-t="noPin"></div>
+  </div>
+
+  <a class="mbtn" id="manualBtn" href="#"><span data-t="manualBtn"></span><span>→</span></a>
+
+  <p class="foot" data-t="foot"></p>
+</main>
+
+<script>
+const T = {
+  ja:{ brand:"BBQ｜お支払い完了", thanks:"お支払いありがとうございました", done:"BBQ機材の決済が完了しました。",
+    pinLabel:"保管庫の暗証番号", pinHelp:"この番号でBBQ機材の保管庫を開けてください。",
+    noPin:"保管庫の鍵はありません。ご利用方法は現地の張り紙をご確認ください。",
+    manualBtn:"BBQマニュアルを見る", roomLabel:"お部屋",
+    foot:"民泊運営 インバウンド株式会社" },
+  en:{ brand:"BBQ · Payment complete", thanks:"Thank you for your payment", done:"Your BBQ equipment payment is complete.",
+    pinLabel:"Storage passcode", pinHelp:"Use this code to open the BBQ storage.",
+    noPin:"There is no storage lock. Please follow the printed notice on site.",
+    manualBtn:"View the BBQ manual", roomLabel:"Room",
+    foot:"Minpaku Operations · Inbound Inc." },
+  zh:{ brand:"BBQ · 付款完成", thanks:"感謝您的付款", done:"BBQ器材的付款已完成。",
+    pinLabel:"保管箱密碼", pinHelp:"請用此密碼打開BBQ器材保管箱。",
+    noPin:"無保管箱鎖。使用方式請參考現場張貼的說明。",
+    manualBtn:"查看BBQ指南", roomLabel:"房間",
+    foot:"民宿營運 · Inbound Inc." },
+  ko:{ brand:"BBQ · 결제 완료", thanks:"결제해 주셔서 감사합니다", done:"BBQ 장비 결제가 완료되었습니다.",
+    pinLabel:"보관함 비밀번호", pinHelp:"이 번호로 BBQ 장비 보관함을 열어 주세요.",
+    noPin:"보관함 잠금은 없습니다. 이용 방법은 현장의 안내문을 확인해 주세요.",
+    manualBtn:"BBQ 매뉴얼 보기", roomLabel:"객실",
+    foot:"민박 운영 · Inbound Inc." }
+};
+
+/* passcode is delivered ONLY on this post-payment page (reached via Square redirect),
+   never on the public QR manual. 526 has no lockbox -> on-site notice. */
+const PROPS = {
+  "526":   { name:{ja:"Villa HI inn 526",en:"Villa HI inn 526",zh:"Villa HI inn 526",ko:"Villa HI inn 526"}, pin:null },
+  kiseki:  { name:{ja:"キセキハウス",en:"Kiseki House",zh:"Kiseki House",ko:"Kiseki House"}, pin:"029" },
+  higashie:{ name:{ja:"名護ビーチサイドハウス（東江）",en:"Nago Beachside House (Agarie)",zh:"名護海濱之家（東江）",ko:"나고 비치사이드 하우스"}, pin:"029" },
+  maravilla:{ name:{ja:"Mar a Villa NAKIJIN",en:"Mar a Villa NAKIJIN",zh:"Mar a Villa NAKIJIN",ko:"Mar a Villa NAKIJIN"}, pin:"029" },
+  inori:   { name:{ja:"いのりリゾート〜空風〜",en:"Inori Resort ~Sorakaze~",zh:"いのりResort〜空風〜",ko:"이노리 리조트"}, pin:"029" },
+  hiro:    { name:{ja:"ぺんしょんHIRO",en:"Pension HIRO",zh:"民宿HIRO",ko:"펜션 HIRO"}, pin:"029" },
+  maeda:   { name:{ja:"CoastVilla恩納村真栄田",en:"CoastVilla Onna Maeda",zh:"CoastVilla恩納村真榮田",ko:"CoastVilla 온나손 마에다"}, pin:"029" },
+  seesaa:  { name:{ja:"Garra rufa シーサー",en:"Garra rufa Seesaa",zh:"Garra rufa Seesaa",ko:"Garra rufa 시사"}, pin:"9292" }
+};
+const ROOMLABEL = { east:"EAST", west:"WEST", pine:"パイン", dolphin:"イルカ", a:"A", b:"B", om1:"OM1", om2:"OM2" };
+
+const $ = id => document.getElementById(id);
+function getParams(){
+  const u = new URLSearchParams(location.search);
+  const p = (u.get("p")||"").toLowerCase();
+  const r = (u.get("room")||"").toLowerCase();
+  return { p: PROPS[p]?p:null, r: ROOMLABEL[r]?r:null };
+}
+function apply(lang){
+  const d = T[lang]; if(!d) return;
+  document.documentElement.lang = lang==="ja"?"ja":lang==="en"?"en":lang==="zh"?"zh-Hant":"ko";
+  document.querySelectorAll("[data-t]").forEach(el=>{ const v=d[el.getAttribute("data-t")]; el.textContent=(v===undefined?"":v); });
+  document.querySelectorAll(".langs button").forEach(b=> b.setAttribute("aria-pressed", b.dataset.lang===lang?"true":"false"));
+
+  const {p,r} = getParams();
+  const P = p ? PROPS[p] : null;
+  // property name + room
+  let label = P ? (P.name[lang]||P.name.ja) : "";
+  if(r) label += "（" + (ROOMLABEL[r]) + "）";
+  $("prop").textContent = label;
+
+  // passcode
+  if(P && P.pin){
+    $("pinCard").hidden = false; $("noPinCard").hidden = true;
+    $("pinValue").textContent = P.pin;
+  } else {
+    $("pinCard").hidden = true; $("noPinCard").hidden = false;
+  }
+  // manual link (same folder index.html)
+  const q = new URLSearchParams();
+  if(p) q.set("p", p);
+  if(r) q.set("room", r);
+  $("manualBtn").href = "./" + (q.toString()? "?"+q.toString() : "");
+  try{ localStorage.setItem("bbqlang", lang); }catch(e){}
+}
+document.querySelectorAll(".langs button").forEach(b=> b.addEventListener("click", ()=>apply(b.dataset.lang)));
+let start="ja"; try{ const s=localStorage.getItem("bbqlang"); if(s&&T[s]) start=s; }catch(e){}
+apply(start);
+</script>
