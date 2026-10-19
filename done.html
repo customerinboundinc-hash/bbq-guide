@@ -128,6 +128,15 @@ const T = {
     foot:"민박 운영 · Inbound Inc." }
 };
 
+/* shown only after the Square order on this address is checked as paid (Make 6694632). */
+const T2 = {
+  ja:{ okLabel:"保管庫の暗証番号", okHelp:"この番号で保管庫を開けてください。", checking:"お支払いを確認しています…" },
+  en:{ okLabel:"Storage passcode", okHelp:"Use this number to open the storage.", checking:"Checking your payment…" },
+  zh:{ okLabel:"保管箱密碼", okHelp:"請使用此密碼開啟保管箱。", checking:"正在確認付款…" },
+  ko:{ okLabel:"보관함 비밀번호", okHelp:"이 번호로 보관함을 열어 주세요.", checking:"결제를 확인하고 있습니다…" }
+};
+const PIN_API = "https://hook.us2.make.com/mgqcqwfbg47bn0axloy2ujjepsaj9naf";
+let PIN = null, PINSTATE = "idle", CUR = "ja";
 /* passcodes are NOT kept in this public page (2026-10-20). CS sends them after checking the Square payment. 526 has no lockbox -> on-site notice. */
 const PROPS = {
   "526":   { name:{ja:"Villa HI inn 526",en:"Villa HI inn 526",zh:"Villa HI inn 526",ko:"Villa HI inn 526"} },
@@ -150,6 +159,7 @@ function getParams(){
 }
 function apply(lang){
   const d = T[lang]; if(!d) return;
+  CUR = lang;
   document.documentElement.lang = lang==="ja"?"ja":lang==="en"?"en":lang==="zh"?"zh-Hant":"ko";
   document.querySelectorAll("[data-t]").forEach(el=>{ const v=d[el.getAttribute("data-t")]; el.textContent=(v===undefined?"":v); });
   document.querySelectorAll(".langs button").forEach(b=> b.setAttribute("aria-pressed", b.dataset.lang===lang?"true":"false"));
@@ -165,6 +175,15 @@ function apply(lang){
   if(P && p !== "526"){
     $("pinCard").hidden = false; $("noPinCard").hidden = true;
     $("pinValue").textContent = "";
+    const t2 = T2[lang] || T2.ja;
+    if(PIN){
+      $("pinCard").querySelector(".pl").textContent = t2.okLabel;
+      $("pinValue").textContent = PIN;
+      $("pinCard").querySelector(".ph").textContent = t2.okHelp;
+    } else if(PINSTATE === "loading"){
+      $("pinValue").textContent = "";
+      $("pinCard").querySelector(".ph").textContent = t2.checking;
+    }
   } else {
     $("pinCard").hidden = true; $("noPinCard").hidden = false;
   }
@@ -182,4 +201,16 @@ function apply(lang){
 document.querySelectorAll(".langs button").forEach(b=> b.addEventListener("click", ()=>apply(b.dataset.lang)));
 let start="ja"; try{ const s=localStorage.getItem("bbqlang"); if(s&&T[s]) start=s; }catch(e){}
 apply(start);
+(function(){
+  const u = new URLSearchParams(location.search);
+  const oid = u.get("orderId") || "";
+  const {p} = getParams();
+  if(!oid || !p || p === "526") return;
+  PINSTATE = "loading"; apply(CUR);
+  fetch(PIN_API + "?orderId=" + encodeURIComponent(oid))
+    .then(r => r.json())
+    .then(j => { if(j && j.ok && j.pin && j.pin !== "none") PIN = String(j.pin); })
+    .catch(() => {})
+    .finally(() => { PINSTATE = "done"; apply(CUR); });
+})();
 </script>
