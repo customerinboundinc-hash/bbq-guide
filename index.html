@@ -254,15 +254,15 @@ footer{border-top:1px solid var(--line); padding-block:20px 34px; color:var(--in
     <div class="sec-head"><span class="n">06</span><h2 data-t="s6"></h2></div>
     <div class="card">
       <p class="lead" data-t="g_lead"></p>
-      <div class="slot"><span class="stag">物件別</span><span data-t="g_slot"></span></div>
+      <p class="lead" data-t="g_slot"></p>
       <ul class="bul"><li class="no" data-t="g_meat"></li></ul>
-      <div class="photo"><span class="pi">📷</span><span data-t="g_photo"></span></div>
     </div>
   </section>
 
   <section id="clean">
     <div class="sec-head"><span class="n">07</span><h2 data-t="s7"></h2></div>
     <div class="card">
+      <p class="lead" data-t="c_kijun" style="margin-top:0"></p>
       <ul class="bul">
         <li id="c1"></li>
         <li id="c2li"><span id="c2"></span></li>
@@ -296,7 +296,7 @@ const T = {
     warnTitle:"はじめに（必ずお読みください）",
     w1:"ご使用の直前にお支払いください。事前申し込みは不要・お支払い後の返金はできません。",
     w2:"お支払いせずに使用された場合、後日 通常の1.5倍（¥7,500）をご請求します。",
-    w3:"片付けをされない場合、片付け代行と同じ ¥2,500 を後日ご請求します。",
+    w3:"片付けは「次の方がそのまま使える状態」が目安です。できていない場合、片付け代行と同じ ¥2,500 を後日ご請求します。",
     w4:"",
     w5:"保管庫の暗証番号は、お支払い完了画面に表示されます。",
     w5_note:"ご利用方法は現地の張り紙をご確認ください。",
@@ -320,9 +320,9 @@ const T = {
     f2:"使用後は火を完全に消してください。炭は冷めるまで時間がかかるため、触る前に必ず冷ましてください。",
     f3:"熱いまま片付けないでください。完全に冷めてから戻してください（火災の危険）。",
     g_lead:"ゴミの分別・捨てる場所・捨て方は物件ごとに異なります。",
-    g_slot:"（物件ごとのゴミルールが入ります）",
+    g_slot:"分別と捨てる場所は、お部屋のQRコードからご覧いただけるご案内と同じです。",
     g_meat:"生ゴミは燃えるゴミに出してください。収集までは必ず室内に置いてください。屋外に残すと野生動物に荒らされます。",
-    g_photo:"外ゴミ箱の案内（写真差し込み予定）",
+    c_kijun:"目安は「次の方がそのまま使える状態」に戻すことです。",
     c1:"網は使い捨てです。十分に冷ましてから捨ててください。炭は完全に冷めてから、燃えるゴミに出してください。",
     c1_elec:"プレートと水受けは、専用のスポンジで洗って干してください。本体などそれ以外の部分は水洗いせず、拭き取ってください。",
     c2:"BBQ機材はスポンジできれいに洗ってください。",
@@ -341,7 +341,7 @@ const T = {
     warnTitle:"Please read first",
     w1:"Pay right before use. No advance booking needed; no refunds after payment.",
     w2:"If you use the equipment without paying, we will bill you 1.5× the normal price (¥7,500) afterward.",
-    w3:"If you don't clean up, we will bill you ¥2,500 afterward (the same as the cleanup service).",
+    w3:"The standard is simple: leave it ready for the next guest to use. If it isn't, we will bill you ¥2,500 afterward (the same as the cleanup service).",
     w4:"",
     w5:"The storage passcode is shown on your payment-complete screen.",
     w5_note:"Please follow the printed notice on site for how to use.",
@@ -365,9 +365,9 @@ const T = {
     f2:"After use, put the fire out completely. Charcoal takes time to cool — always let it cool before touching.",
     f3:"Never put it away hot. Return it only after it has fully cooled (fire hazard).",
     g_lead:"Trash sorting, disposal location and method differ by property.",
-    g_slot:"(Per-property trash rules go here)",
+    g_slot:"Sorting and disposal locations are the same as the guide you can open from the QR code in your room.",
     g_meat:"Food waste goes in burnable trash. Keep it indoors until collection — leaving it outside attracts wild animals.",
-    g_photo:"Outdoor bin guide (photo to be added)",
+    c_kijun:"The standard: leave everything ready for the next guest to use.",
     c1:"The grill net is disposable — let it cool well, then throw it away. Let the charcoal cool completely, then put it out as burnable trash.",
     c1_elec:"Wash the plate and the water tray with the dedicated sponge and let them dry. Do not wash the body or any other part — wipe it clean instead.",
     c2:"Wash the BBQ equipment clean with a sponge.",
@@ -386,7 +386,7 @@ const T = {
     warnTitle:"請先閱讀",
     w1:"請於使用前付款。無需事先預約；付款後恕不退款。",
     w2:"若未付款即使用，事後將收取通常費用的1.5倍（¥7,500）。",
-    w3:"若未整理清潔，事後將收取與代整理服務相同的 ¥2,500。",
+    w3:"整理的標準是「讓下一位客人能直接使用」。若未達成，事後將收取與代整理服務相同的 ¥2,500。",
     w4:"",
     w5:"保管箱密碼會顯示在付款完成畫面上。",
     w5_note:"使用方式請參考現場張貼的說明。",
@@ -410,9 +410,9 @@ const T = {
     f2:"使用後請將火完全熄滅。木炭需要時間冷卻，觸摸前務必冷卻。",
     f3:"請勿在高溫狀態下收拾。完全冷卻後再收回（火災危險）。",
     g_lead:"垃圾分類、丟棄地點與方式因物件而異。",
-    g_slot:"（各物件垃圾規則將填入此處）",
+    g_slot:"分類方式與丟棄地點，與您房內QR碼所開啟的說明相同。",
     g_meat:"廚餘請作為可燃垃圾丟棄。收運前請務必放在室內，留在戶外會招來野生動物。",
-    g_photo:"戶外垃圾桶說明（預定插入照片）",
+    c_kijun:"標準是讓下一位客人能直接使用的狀態。",
     c1:"烤網為一次性，請充分冷卻後丟棄。木炭請完全冷卻後，作為可燃垃圾丟棄。",
     c1_elec:"烤盤與承水盤請用專用海綿清洗並晾乾。本體等其餘部分請勿水洗，以擦拭方式清潔。",
     c2:"請用海綿將BBQ器材清洗乾淨。",
@@ -431,7 +431,7 @@ const T = {
     warnTitle:"먼저 읽어 주세요",
     w1:"사용 직전에 결제해 주세요. 사전 예약 불필요, 결제 후 환불 불가.",
     w2:"결제하지 않고 사용하시면 추후 통상 요금의 1.5배(¥7,500)를 청구합니다.",
-    w3:"정리하지 않으면 정리 대행과 같은 ¥2,500을 추후 청구합니다.",
+    w3:"정리의 기준은 「다음 손님이 그대로 사용할 수 있는 상태」입니다. 그렇지 않은 경우 정리 대행과 같은 ¥2,500을 추후 청구합니다.",
     w4:"",
     w5:"보관함 비밀번호는 결제 완료 화면에 표시됩니다.",
     w5_note:"이용 방법은 현장의 안내문을 확인해 주세요.",
@@ -455,9 +455,9 @@ const T = {
     f2:"사용 후에는 불을 완전히 꺼 주세요. 숯은 식는 데 시간이 걸리므로 만지기 전에 반드시 식혀 주세요.",
     f3:"뜨거운 상태로 정리하지 마세요. 완전히 식은 후에 되돌려 주세요(화재 위험).",
     g_lead:"쓰레기 분리·버리는 장소·방법은 물건마다 다릅니다.",
-    g_slot:"（물건별 쓰레기 규칙이 들어갑니다）",
+    g_slot:"분리 방법과 버리는 장소는 객실의 QR코드로 열리는 안내와 동일합니다.",
     g_meat:"음식물 쓰레기는 타는 쓰레기로 버려 주세요. 수거 전까지는 반드시 실내에 두세요. 실외에 두면 야생동물이 헤집습니다.",
-    g_photo:"실외 쓰레기통 안내(사진 삽입 예정)",
+    c_kijun:"기준은 「다음 손님이 그대로 사용할 수 있는 상태」로 되돌리는 것입니다.",
     c1:"석쇠는 일회용입니다. 충분히 식힌 뒤 버려 주세요. 숯은 완전히 식힌 뒤 타는 쓰레기로 버려 주세요.",
     c1_elec:"플레이트와 물받이는 전용 스펀지로 씻어 말려 주세요. 본체 등 그 외 부분은 물로 씻지 말고 닦아 주세요.",
     c2:"BBQ 장비는 스펀지로 깨끗이 씻어 주세요.",
