@@ -111,6 +111,8 @@ section{scroll-margin-top:112px; padding-top:26px}
 
 .slot{margin-top:10px; border:1.5px dashed color-mix(in srgb,var(--amber) 55%,var(--line)); background:color-mix(in srgb,var(--amber) 8%,var(--panel)); border-radius:10px; padding:12px 13px; color:var(--ink-soft); font-size:13.5px; display:flex; gap:9px; align-items:flex-start}
 .slot .stag{flex:none; font-size:10px; font-weight:800; letter-spacing:.06em; color:var(--amber); border:1px solid color-mix(in srgb,var(--amber) 45%,var(--line)); border-radius:5px; padding:2px 6px; margin-top:1px; white-space:nowrap}
+.storeimg{margin-top:11px; width:100%; border-radius:12px; border:1px solid var(--line-strong); display:block}
+.storecap{margin-top:6px; font-size:12px; color:var(--ink-soft); text-align:center}
 .photo{margin-top:10px; border:1.5px dashed var(--line-strong); border-radius:12px; padding:22px 12px; text-align:center; color:var(--ink-soft); font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px}
 .photo .pi{font-size:22px}
 .notebox{margin-top:10px; background:var(--ember-bg); border:1px solid color-mix(in srgb,var(--ember) 30%,var(--line)); border-radius:10px; padding:11px 13px; color:var(--ember-ink); font-size:13.5px; font-weight:700; display:flex; gap:8px; align-items:flex-start}
@@ -223,6 +225,8 @@ footer{border-top:1px solid var(--line); padding-block:20px 34px; color:var(--in
     <div class="card">
       <h3 class="subh" data-t="pl_store_h"></h3>
       <p id="storeBody"></p>
+      <img class="storeimg" id="storeImg" hidden alt="">
+      <p class="storecap" id="storeCap" hidden></p>
       <div class="notebox" id="storeNote" hidden><span>⚠️</span><span id="storeNoteText"></span></div>
       <p class="lead" id="plPin"></p>
     </div>
@@ -312,7 +316,8 @@ const T = {
     pl_area_h:"BBQをしていい場所",
     no_backyard:"敷地内ではBBQをしていただけません。機材はお持ち出しいただけます。",
     pl_store_h:"機材の保管場所", pl_store_slot:"（物件ごとの保管場所の説明が入ります）",
-    pl_pin:"保管ボックスの暗証番号は、お支払い完了画面に表示されます。",
+    pl_photo_cap:"実際の置き場所の写真です。",
+    pl_pin:"開けるための暗証番号は、お支払い完了画面に表示されます。",
     pl_pin_note:"保管庫の鍵はありません。ご利用方法は現地の張り紙をご確認ください。",
     ch_lead:"初めての方は、こちらの動画が参考になります（着火剤を使った火起こし）。",
     ch_vtitle:"かんたん火起こし講座（たけだバーベキュー）", ch_vnote:"YouTubeで開きます",
@@ -357,7 +362,8 @@ const T = {
     pl_area_h:"Where you may BBQ",
     no_backyard:"BBQ is not allowed on the property grounds. You are welcome to take the equipment off-site.",
     pl_store_h:"Where the equipment is stored", pl_store_slot:"(Per-property storage location goes here)",
-    pl_pin:"The storage box passcode appears on your payment-complete screen.",
+    pl_photo_cap:"A photo of where it actually is.",
+    pl_pin:"The passcode to open it appears on your payment-complete screen.",
     pl_pin_note:"There is no storage lock. Please follow the printed notice on site.",
     ch_lead:"New to this? This video is a helpful reference (lighting charcoal with a fire starter).",
     ch_vtitle:"Easy fire-starting guide (Japanese)", ch_vnote:"Opens on YouTube",
@@ -402,7 +408,8 @@ const T = {
     pl_area_h:"可BBQ的地點",
     no_backyard:"本物件不可在基地內BBQ。器材可以攜出使用。",
     pl_store_h:"器材保管處", pl_store_slot:"（各物件保管處說明將填入此處）",
-    pl_pin:"保管箱密碼會顯示在付款完成畫面。",
+    pl_photo_cap:"實際存放位置的照片。",
+    pl_pin:"開啟用的密碼會顯示在付款完成畫面。",
     pl_pin_note:"無保管箱鎖。使用方式請參考現場張貼的說明。",
     ch_lead:"初次使用者可參考此影片（使用助燃劑生火）。",
     ch_vtitle:"簡易生火教學（日語）", ch_vnote:"於 YouTube 開啟",
@@ -447,7 +454,8 @@ const T = {
     pl_area_h:"BBQ 가능 장소",
     no_backyard:"부지 내에서는 BBQ를 하실 수 없습니다. 장비는 가지고 나가셔도 됩니다.",
     pl_store_h:"장비 보관 장소", pl_store_slot:"（물건별 보관 장소 설명이 들어갑니다）",
-    pl_pin:"보관함 비밀번호는 결제 완료 화면에 표시됩니다.",
+    pl_photo_cap:"실제 보관 장소의 사진입니다.",
+    pl_pin:"여는 데 필요한 비밀번호는 결제 완료 화면에 표시됩니다.",
     pl_pin_note:"보관함 잠금은 없습니다. 이용 방법은 현장의 안내문을 확인해 주세요.",
     ch_lead:"처음이신 분은 이 영상을 참고하세요(착화제를 사용한 불 붙이기).",
     ch_vtitle:"쉬운 불 붙이기 강좌(일본어)", ch_vnote:"YouTube에서 열립니다",
@@ -504,10 +512,18 @@ const PROPS = {
   higashie:{ order:3, name:{ja:"名護ビーチサイドハウス（東江）",en:"Nago Beachside House (Agarie)",zh:"名護海濱之家（東江）",ko:"나고 비치사이드 하우스(아가리에)"},
     rooms:{ pine:{label:"パイン", link:"https://square.link/u/Ukehzs1l"}, dolphin:{label:"イルカ", link:"https://square.link/u/7TPtQkTY"} },
     charcoal:true, electric:false, passcode:true, noBackyard:true,
+    store:{ja:"パイン・イルカとも、玄関に置いてあります。",
+           en:"For both Pine and Dolphin, the equipment is kept at the entrance.",
+           zh:"Pine、Dolphin兩棟的器材都放在玄關。",
+           ko:"파인・이루카 모두 현관에 놓여 있습니다."},
     wash:{ja:"建物横の水道をお使いください。", en:"Please use the tap at the side of the building.",
           zh:"請使用建築物旁的水龍頭。", ko:"건물 옆의 수도를 사용해 주세요."} },
   maravilla:{ order:4, name:{ja:"Mar a Villa NAKIJIN",en:"Mar a Villa NAKIJIN",zh:"Mar a Villa NAKIJIN",ko:"Mar a Villa NAKIJIN"},
     rooms:{ main:{label:"BBQ", link:"https://square.link/u/3x4vT8nX"} }, charcoal:true, electric:false, passcode:true,
+    store:{ja:"玄関を出て左の倉庫の中にあります。倉庫の鍵は、玄関に置いてある本の形をした鍵付きボックスに入っています。",
+           en:"In the storeroom to the left as you step out of the entrance. The key to the storeroom is inside the book-shaped lockbox by the entrance.",
+           zh:"在走出玄關後左側的倉庫內。倉庫的鑰匙放在玄關處一個書本造型的密碼鎖盒裡。",
+           ko:"현관을 나와 왼쪽에 있는 창고 안에 있습니다. 창고 열쇠는 현관에 놓인 책 모양의 잠금 상자 안에 들어 있습니다."},
     area:{ja:"プールサイドでご利用ください。", en:"Please use the poolside.",
           zh:"請在泳池畔使用。", ko:"풀사이드에서 이용해 주세요."},
     wash:{ja:"駐車場横の水道をお使いください。BBQはプールサイドでできますが、洗うときは機材を水道まで運んでください。",
@@ -516,6 +532,10 @@ const PROPS = {
           ko:"주차장 옆의 수도를 사용해 주세요. BBQ는 풀사이드에서 하실 수 있지만, 씻을 때는 장비를 수도까지 옮겨 주세요."} },
   inori:{ order:5, name:{ja:"いのりリゾート〜空風〜",en:"Inori Resort ~Sorakaze~",zh:"いのりResort〜空風〜",ko:"이노리 리조트 ~소라카제~"},
     rooms:{ main:{label:"BBQ", link:"https://square.link/u/AO0538um"} }, charcoal:true, electric:false, passcode:true,
+    store:{ja:"ウッドデッキに置いてあります。",
+           en:"The equipment is kept on the wood deck.",
+           zh:"器材放在木甲板上。",
+           ko:"장비는 우드데크에 놓여 있습니다."},
     area:{ja:"ウッドデッキでご利用ください。", en:"Please use the wood deck.",
           zh:"請在木甲板使用。", ko:"우드데크에서 이용해 주세요."},
     wash:{ja:"ウッドデッキのシンクをお使いください。", en:"Please use the sink on the wood deck.",
@@ -523,6 +543,10 @@ const PROPS = {
   hiro:{ order:6, name:{ja:"ぺんしょんHIRO",en:"Pension HIRO",zh:"民宿HIRO",ko:"펜션 HIRO"},
     rooms:{ a:{label:"A", link:"https://square.link/u/jB7XM7pu"}, b:{label:"B", link:"https://square.link/u/kn4kRLiG"} },
     charcoal:true, electric:false, passcode:true, noWash:true,
+    store:{ja:"A・Bとも、玄関に置いてあります。",
+           en:"For both A and B, the equipment is kept at the entrance.",
+           zh:"A、B兩間的器材都放在玄關。",
+           ko:"A・B 모두 현관에 놓여 있습니다."},
     areaRooms:{ a:{ja:"駐車場側のBBQテーブルでご利用ください。", en:"Please use the BBQ table on the parking-lot side.",
                    zh:"請使用停車場側的BBQ桌。", ko:"주차장 쪽 BBQ 테이블을 이용해 주세요."},
                 b:{ja:"玄関前のBBQテーブルでご利用ください。", en:"Please use the BBQ table in front of the entrance.",
@@ -534,6 +558,14 @@ const PROPS = {
   maeda:{ order:7, name:{ja:"CoastVilla恩納村真栄田",en:"CoastVilla Onna Maeda",zh:"CoastVilla恩納村真榮田",ko:"CoastVilla 온나손 마에다"},
     rooms:{ om1:{label:"OM1", link:"https://square.link/u/6QQeuWai"}, om2:{label:"OM2", link:"https://square.link/u/3gAwaU3C"} },
     charcoal:true, electric:false, passcode:true,
+    storeRooms:{ om1:{ja:"玄関に置いてあります。機材本体に鍵がかかっています。",
+                      en:"Kept at the entrance. The equipment itself is locked.",
+                      zh:"放在玄關。器材本體上鎖。",
+                      ko:"현관에 놓여 있습니다. 장비 본체에 잠금장치가 되어 있습니다."},
+                 om2:{ja:"玄関に置いてあります。機材はボックスに入っていて、ボックスに鍵がかかっています。",
+                      en:"Kept at the entrance. The equipment is inside a box, and the box is locked.",
+                      zh:"放在玄關。器材放在箱子裡，箱子上鎖。",
+                      ko:"현관에 놓여 있습니다. 장비는 상자 안에 있고, 상자에 잠금장치가 되어 있습니다."} },
     areaRooms:{ om1:{ja:"裏庭でご利用ください。", en:"Please use the back garden.",
                      zh:"請在後院使用。", ko:"뒷마당에서 이용해 주세요."},
                 om2:{ja:"駐車場奥でご利用ください。", en:"Please use the far end of the parking area.",
@@ -542,6 +574,11 @@ const PROPS = {
           zh:"請使用室外的水龍頭。", ko:"외부 수도꼭지를 사용해 주세요."} },
   seesaa:{ order:8, name:{ja:"Garra rufa シーサー",en:"Garra rufa Seesaa",zh:"Garra rufa Seesaa",ko:"Garra rufa 시사"},
     rooms:{ main:{label:"BBQ", link:"https://square.link/u/yM5tEq3g"} }, charcoal:true, electric:false, passcode:true,
+    store:{ja:"小屋の壁沿いに置いてあります。グレーの収納庫と、青いふたの収納ボックスが目印です。",
+           en:"Along the wall of the hut. Look for the grey cabinet and the storage box with the blue lid.",
+           zh:"放在小屋的牆邊。請找灰色置物櫃和藍色蓋子的收納箱。",
+           ko:"오두막 벽을 따라 놓여 있습니다. 회색 수납장과 파란 뚜껑의 수납 상자가 표시입니다."},
+    storePhoto:"seesaa-store.jpg",
     area:{ja:"庭のBBQスペースでご利用ください。", en:"Please use the BBQ area in the garden.",
           zh:"請在庭院的BBQ區使用。", ko:"정원의 BBQ 공간에서 이용해 주세요."},
     wash:{ja:"外の蛇口をお使いください。", en:"Please use the outdoor tap.",
@@ -681,8 +718,31 @@ function render(lang){
 
   $("noBackyard").hidden = !P.noBackyard;
   const storeBody = $("storeBody");
-  if(P.store){ storeBody.textContent = P.store[lang] || P.store.ja; storeBody.style.color = ""; }
+  let storeTxt = "";
+  if(P.storeRooms){
+    const srk = getRoom(P);
+    if(srk && P.storeRooms[srk]){
+      storeTxt = P.storeRooms[srk][lang] || P.storeRooms[srk].ja;
+    } else {
+      const sep = (lang === "en") ? ": " : "：";
+      storeTxt = Object.keys(P.storeRooms).map(function(k){
+        const lbl = P.rooms[k] ? P.rooms[k].label + sep : "";
+        return lbl + (P.storeRooms[k][lang] || P.storeRooms[k].ja);
+      }).join("\n");
+    }
+  } else if(P.store){
+    storeTxt = P.store[lang] || P.store.ja;
+  }
+  storeBody.style.whiteSpace = "pre-line";
+  if(storeTxt){ storeBody.textContent = storeTxt; storeBody.style.color = ""; }
   else { storeBody.textContent = d.pl_store_slot; storeBody.style.color = "var(--ink-soft)"; }
+  const simg = $("storeImg"), scap = $("storeCap");
+  if(P.storePhoto){
+    simg.hidden = false; simg.src = P.storePhoto;
+    simg.alt = d.pl_store_h;
+    scap.hidden = false; scap.textContent = d.pl_photo_cap;
+  } else { simg.hidden = true; simg.removeAttribute("src"); scap.hidden = true; }
+
   $("storeNote").hidden = !P.storeNote;
   if(P.storeNote) $("storeNoteText").textContent = P.storeNote[lang] || P.storeNote.ja;
   $("plPin").textContent = P.passcode ? d.pl_pin : d.pl_pin_note;
