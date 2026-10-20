@@ -269,6 +269,7 @@ footer{border-top:1px solid var(--line); padding-block:20px 34px; color:var(--in
       </ul>
       <h3 class="subh" style="margin-top:15px" data-t="c_wash_h"></h3>
       <p id="washBody"></p>
+      <p class="lead" id="washOnly" hidden></p>
       <div class="notebox" id="washNo" hidden><span>🚫</span><span id="washNoText"></span></div>
       <p class="lead" data-t="c_daiko"></p>
     </div>
@@ -322,10 +323,12 @@ const T = {
     g_slot:"（物件ごとのゴミルールが入ります）",
     g_meat:"生ゴミは燃えるゴミに出してください。収集までは必ず室内に置いてください。屋外に残すと野生動物に荒らされます。",
     g_photo:"外ゴミ箱の案内（写真差し込み予定）",
-    c1:"網は使い捨てです。そのまま捨ててください。炭は完全に冷めてから、燃えるゴミに出してください。",
+    c1:"網は使い捨てです。十分に冷ましてから捨ててください。炭は完全に冷めてから、燃えるゴミに出してください。",
     c1_elec:"プレートと水受けは、専用のスポンジで洗って干してください。本体などそれ以外の部分は水洗いせず、拭き取ってください。",
     c2:"BBQ機材はスポンジできれいに洗ってください。",
-    c_wash_h:"洗い場", c_wash_ask:"洗い場の場所が分からないときは、スタッフへお問い合わせください。",
+    c_wash_h:"洗い場",
+    c_wash_only:"上の場所だけをお使いください。室内のシンク・シャワー・プールサイドでは洗わないでください。",
+    c_wash_ask:"洗い場が見当たらないときは、無理に洗わなくて結構です。炭とゴミを片付けて、機材を元の場所に戻してください。",
     c_daiko:"「片付け代行」をご購入の場合は、そのまま置いていただいて結構です。",
     n1:"沖縄は天候が変わりやすいため、当日の天候をご確認ください。",
     n2:"食材を置きっぱなしにしないでください（野生動物が荒らすことがあります）。",
@@ -365,10 +368,12 @@ const T = {
     g_slot:"(Per-property trash rules go here)",
     g_meat:"Food waste goes in burnable trash. Keep it indoors until collection — leaving it outside attracts wild animals.",
     g_photo:"Outdoor bin guide (photo to be added)",
-    c1:"The grill net is disposable — just throw it away. Let the charcoal cool completely, then put it out as burnable trash.",
+    c1:"The grill net is disposable — let it cool well, then throw it away. Let the charcoal cool completely, then put it out as burnable trash.",
     c1_elec:"Wash the plate and the water tray with the dedicated sponge and let them dry. Do not wash the body or any other part — wipe it clean instead.",
     c2:"Wash the BBQ equipment clean with a sponge.",
-    c_wash_h:"Washing area", c_wash_ask:"If you can't find the washing area, please ask our staff.",
+    c_wash_h:"Washing area",
+    c_wash_only:"Please use only the place above. Do not wash in indoor sinks, in the shower, or at the poolside.",
+    c_wash_ask:"If you can't find a washing area, there's no need to force it. Just clear away the charcoal and trash and return the equipment to where it was.",
     c_daiko:"If you bought the “Cleanup service”, just leave everything as is.",
     n1:"Okinawa weather changes fast — please check the day's forecast.",
     n2:"Don't leave food unattended (wild animals may get into it).",
@@ -408,10 +413,12 @@ const T = {
     g_slot:"（各物件垃圾規則將填入此處）",
     g_meat:"廚餘請作為可燃垃圾丟棄。收運前請務必放在室內，留在戶外會招來野生動物。",
     g_photo:"戶外垃圾桶說明（預定插入照片）",
-    c1:"烤網為一次性，請直接丟棄。木炭請完全冷卻後，作為可燃垃圾丟棄。",
+    c1:"烤網為一次性，請充分冷卻後丟棄。木炭請完全冷卻後，作為可燃垃圾丟棄。",
     c1_elec:"烤盤與承水盤請用專用海綿清洗並晾乾。本體等其餘部分請勿水洗，以擦拭方式清潔。",
     c2:"請用海綿將BBQ器材清洗乾淨。",
-    c_wash_h:"清洗處", c_wash_ask:"若找不到清洗處，請洽詢服務人員。",
+    c_wash_h:"清洗處",
+    c_wash_only:"請僅使用上述地點。請勿在室內水槽、淋浴間或泳池畔清洗。",
+    c_wash_ask:"若找不到清洗處，不必勉強清洗。請清除木炭與垃圾，並將器材放回原處。",
     c_daiko:"若已購買「清潔代辦」，維持原樣即可。",
     n1:"沖繩天氣多變，請確認當日天氣。",
     n2:"請勿放置食材不管（野生動物可能會翻找）。",
@@ -451,10 +458,12 @@ const T = {
     g_slot:"（물건별 쓰레기 규칙이 들어갑니다）",
     g_meat:"음식물 쓰레기는 타는 쓰레기로 버려 주세요. 수거 전까지는 반드시 실내에 두세요. 실외에 두면 야생동물이 헤집습니다.",
     g_photo:"실외 쓰레기통 안내(사진 삽입 예정)",
-    c1:"석쇠는 일회용입니다. 그대로 버려 주세요. 숯은 완전히 식힌 뒤 타는 쓰레기로 버려 주세요.",
+    c1:"석쇠는 일회용입니다. 충분히 식힌 뒤 버려 주세요. 숯은 완전히 식힌 뒤 타는 쓰레기로 버려 주세요.",
     c1_elec:"플레이트와 물받이는 전용 스펀지로 씻어 말려 주세요. 본체 등 그 외 부분은 물로 씻지 말고 닦아 주세요.",
     c2:"BBQ 장비는 스펀지로 깨끗이 씻어 주세요.",
-    c_wash_h:"세척 장소", c_wash_ask:"세척 장소를 모르실 때는 직원에게 문의해 주세요.",
+    c_wash_h:"세척 장소",
+    c_wash_only:"위의 장소만 사용해 주세요. 실내 싱크대・샤워실・풀사이드에서는 씻지 마세요.",
+    c_wash_ask:"세척 장소를 찾지 못하셨다면 무리해서 씻지 않으셔도 됩니다. 숯과 쓰레기를 치우고 장비를 제자리에 돌려놓아 주세요.",
     c_daiko:"‘정리 대행’을 구매하신 경우 그대로 두셔도 됩니다.",
     n1:"오키나와는 날씨 변화가 큽니다. 당일 날씨를 확인해 주세요.",
     n2:"식재료를 방치하지 마세요(야생동물이 헤집을 수 있습니다).",
@@ -486,9 +495,7 @@ const PROPS = {
   maravilla:{ order:4, name:{ja:"Mar a Villa NAKIJIN",en:"Mar a Villa NAKIJIN",zh:"Mar a Villa NAKIJIN",ko:"Mar a Villa NAKIJIN"},
     rooms:{ main:{label:"BBQ", link:"https://square.link/u/3x4vT8nX"} }, charcoal:true, electric:false, passcode:true,
     wash:{ja:"駐車場横の水道をお使いください。", en:"Please use the tap next to the parking area.",
-          zh:"請使用停車場旁的水龍頭。", ko:"주차장 옆의 수도를 사용해 주세요."},
-    washNo:{ja:"プールサイド・シャワーでは洗わないでください。", en:"Do not wash at the poolside or in the shower.",
-            zh:"請勿在泳池畔或淋浴間清洗。", ko:"풀사이드・샤워실에서는 씻지 마세요."} },
+          zh:"請使用停車場旁的水龍頭。", ko:"주차장 옆의 수도를 사용해 주세요."} },
   inori:{ order:5, name:{ja:"いのりリゾート〜空風〜",en:"Inori Resort ~Sorakaze~",zh:"いのりResort〜空風〜",ko:"이노리 리조트 ~소라카제~"},
     rooms:{ main:{label:"BBQ", link:"https://square.link/u/AO0538um"} }, charcoal:true, electric:false, passcode:true,
     wash:{ja:"ウッドデッキのシンクをお使いください。", en:"Please use the sink on the wood deck.",
@@ -632,13 +639,15 @@ function render(lang){
   else { $("c1").textContent = d.c1; $("c2li").hidden = !!P.noWash; $("c2").textContent = d.c2; }
 
   // washing area (per property)
-  const washBody = $("washBody");
+  const washBody = $("washBody"), washOnly = $("washOnly");
   if(P.noWash){
-    washBody.hidden = true;
+    washBody.hidden = true; washOnly.hidden = true;
   } else if(P.wash){
     washBody.hidden = false; washBody.textContent = P.wash[lang] || P.wash.ja; washBody.style.color = "";
+    washOnly.hidden = false; washOnly.textContent = d.c_wash_only;
   } else {
-    washBody.hidden = false; washBody.textContent = d.c_wash_ask; washBody.style.color = "var(--ink-soft)";
+    washBody.hidden = false; washBody.textContent = d.c_wash_ask; washBody.style.color = "";
+    washOnly.hidden = true;
   }
   $("washNo").hidden = !P.washNo;
   if(P.washNo) $("washNoText").textContent = P.washNo[lang] || P.washNo.ja;
