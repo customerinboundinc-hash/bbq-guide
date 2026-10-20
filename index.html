@@ -223,6 +223,7 @@ footer{border-top:1px solid var(--line); padding-block:20px 34px; color:var(--in
     <div class="card">
       <h3 class="subh" data-t="pl_store_h"></h3>
       <p id="storeBody"></p>
+      <div class="notebox" id="storeNote" hidden><span>⚠️</span><span id="storeNoteText"></span></div>
       <p class="lead" id="plPin"></p>
     </div>
   </section>
@@ -477,6 +478,14 @@ const T = {
 const PROPS = {
   "526":{ order:1, name:{ja:"Villa HI inn 526",en:"Villa HI inn 526",zh:"Villa HI inn 526",ko:"Villa HI inn 526"},
     rooms:{ main:{label:"526", link:"https://square.link/u/49Bo8TGW"} }, charcoal:false, electric:true, passcode:false,
+    store:{ja:"玄関横に置いてあります。",
+           en:"The equipment is kept beside the entrance.",
+           zh:"器材放在玄關旁。",
+           ko:"장비는 현관 옆에 놓여 있습니다."},
+    storeNote:{ja:"運ぶときは室内を通らず、外から回してください。電気式のため、水に濡らさないでください。雨が降ってきたら室内に入れてください。",
+               en:"Please carry it around the outside rather than through the rooms. It is electric, so keep it dry. If it starts raining, bring it indoors.",
+               zh:"搬運時請勿穿過室內，請從屋外繞行。本機為電力式，請勿碰水。若下雨請收進室內。",
+               ko:"옮기실 때는 실내를 지나지 말고 바깥으로 돌아서 운반해 주세요. 전기식이므로 물에 젖지 않게 해 주세요. 비가 오기 시작하면 실내로 들여 주세요."},
     area:{ja:"ピロティ（建物1階の屋根のあるスペース）でご利用ください。", en:"Please use the piloti — the covered open space on the ground floor.",
           zh:"請在挑高層（1樓有屋頂的開放空間）使用。", ko:"필로티(건물 1층의 지붕이 있는 개방 공간)에서 이용해 주세요."},
     wash:{ja:"外の蛇口をお使いください。", en:"Please use the outdoor tap.",
@@ -674,6 +683,8 @@ function render(lang){
   const storeBody = $("storeBody");
   if(P.store){ storeBody.textContent = P.store[lang] || P.store.ja; storeBody.style.color = ""; }
   else { storeBody.textContent = d.pl_store_slot; storeBody.style.color = "var(--ink-soft)"; }
+  $("storeNote").hidden = !P.storeNote;
+  if(P.storeNote) $("storeNoteText").textContent = P.storeNote[lang] || P.storeNote.ja;
   $("plPin").textContent = P.passcode ? d.pl_pin : d.pl_pin_note;
 
   // clean
