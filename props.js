@@ -35,7 +35,7 @@ window.BBQ_PROPS = {
     wash:{ja:"建物横の水道をお使いください。", en:"Please use the tap at the side of the building.",
           zh:"請使用建築物旁的水龍頭。", ko:"건물 옆의 수도를 사용해 주세요."} },
   maravilla:{ order:4, name:{ja:"Mar a Villa NAKIJIN",en:"Mar a Villa NAKIJIN",zh:"Mar a Villa NAKIJIN",ko:"Mar a Villa NAKIJIN"},
-    rooms:{ main:{label:"BBQ", link:"https://square.link/u/3x4vT8nX"} }, charcoal:true, electric:false, passcode:true,
+    rooms:{ main:{label:"BBQ", link:"https://square.link/u/3X4vT8nX"} }, charcoal:true, electric:false, passcode:true,
     store:{ja:"玄関を出て左の倉庫の中にあります。倉庫の鍵は、玄関に置いてある本の形をした鍵付きボックスに入っています。",
            en:"In the storeroom to the left as you step out of the entrance. The key to the storeroom is inside the book-shaped lockbox by the entrance.",
            zh:"在走出玄關後左側的倉庫內。倉庫的鑰匙放在玄關處一個書本造型的密碼鎖盒裡。",
