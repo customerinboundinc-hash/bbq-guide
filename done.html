@@ -60,6 +60,10 @@ main{padding-block:30px 48px}
 .pincard .pl{font-size:12.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--sea-ink)}
 .pincard .pv{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:52px; letter-spacing:.14em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:6px; line-height:1.1}
 .pincard .ph{font-size:13.5px; color:var(--ink-soft); margin-top:8px}
+.place{margin-top:14px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; text-align:left}
+.place .pl{font-size:12.5px; font-weight:700; letter-spacing:.1em; color:var(--sea-ink)}
+.place .pt{font-size:15px; font-weight:700; line-height:1.6; margin-top:6px}
+.place img{margin-top:10px; width:100%; border-radius:12px; border:1px solid var(--line); display:block}
 .pincard.nopin{background:var(--ember-bg); border-color:color-mix(in srgb,var(--ember) 30%,var(--line))}
 .pincard.nopin .np{color:var(--ember-ink); font-size:15px; font-weight:700; line-height:1.55}
 
@@ -98,31 +102,38 @@ main{padding-block:30px 48px}
     <div class="np" data-t="noPin"></div>
   </div>
 
+  <div class="place" id="placeCard" hidden>
+    <div class="pl" data-t="placeLabel"></div>
+    <div class="pt" id="placeText"></div>
+    <img id="placeImg" hidden alt="">
+  </div>
+
   <a class="mbtn" id="manualBtn" href="#"><span data-t="manualBtn"></span><span>→</span></a>
 
   <p class="foot" id="payRef"></p>
   <p class="foot" data-t="foot"></p>
 </main>
 
+<script src="props.js"></script>
 <script>
 const T = {
   ja:{ brand:"BBQ｜お支払い完了", thanks:"お支払いありがとうございました", done:"BBQ機材の決済が完了しました。",
-    pinLabel:"保管庫の暗証番号について", pinHelp:"保管庫の暗証番号は、ご予約のメッセージ（Airbnb・Booking.comなど）でCSからお送りします。受付は10:00〜22:00です。22時以降のお支払いは翌朝のご連絡になります。",
+    pinLabel:"保管庫の暗証番号について", pinHelp:"この画面で暗証番号を表示できなかった場合は、ご予約のメッセージ（Airbnb・Booking.comなど）でCSからお送りします。受付は10:00〜22:00です（22時以降のお支払いは翌朝のご連絡）。", placeLabel:"BBQ機材の置き場所",
     noPin:"保管庫の鍵はありません。ご利用方法は現地の張り紙をご確認ください。",
     manualBtn:"BBQマニュアルを見る", roomLabel:"お部屋",
     foot:"民泊運営 インバウンド株式会社" },
   en:{ brand:"BBQ · Payment complete", thanks:"Thank you for your payment", done:"Your BBQ equipment payment is complete.",
-    pinLabel:"About the storage passcode", pinHelp:"Our support team will send the storage passcode through your booking messages (Airbnb, Booking.com, etc.). Support hours are 10:00–22:00; payments made after 22:00 will be answered the next morning.",
+    pinLabel:"About the storage passcode", pinHelp:"If the passcode could not be shown on this screen, our support team will send it through your booking messages (Airbnb, Booking.com, etc.). Support hours are 10:00–22:00; payments made after 22:00 will be answered the next morning.", placeLabel:"Where the BBQ equipment is",
     noPin:"There is no storage lock. Please follow the printed notice on site.",
     manualBtn:"View the BBQ manual", roomLabel:"Room",
     foot:"Minpaku Operations · Inbound Inc." },
   zh:{ brand:"BBQ · 付款完成", thanks:"感謝您的付款", done:"BBQ器材的付款已完成。",
-    pinLabel:"關於保管箱密碼", pinHelp:"保管箱密碼將由客服透過您的訂房訊息（Airbnb、Booking.com 等）傳送給您。客服時間為 10:00–22:00，22:00 以後的付款將於隔天早上回覆。",
+    pinLabel:"關於保管箱密碼", pinHelp:"若此畫面未能顯示密碼，客服將透過您的訂房訊息（Airbnb、Booking.com 等）傳送給您。客服時間為 10:00–22:00，22:00 以後的付款將於隔天早上回覆。", placeLabel:"BBQ器材的存放位置",
     noPin:"無保管箱鎖。使用方式請參考現場張貼的說明。",
     manualBtn:"查看BBQ指南", roomLabel:"房間",
     foot:"民宿營運 · Inbound Inc." },
   ko:{ brand:"BBQ · 결제 완료", thanks:"결제해 주셔서 감사합니다", done:"BBQ 장비 결제가 완료되었습니다.",
-    pinLabel:"보관함 비밀번호 안내", pinHelp:"보관함 비밀번호는 예약 메시지(Airbnb, Booking.com 등)로 고객센터에서 보내 드립니다. 응대 시간은 10:00~22:00이며, 22시 이후 결제는 다음 날 아침에 안내해 드립니다.",
+    pinLabel:"보관함 비밀번호 안내", pinHelp:"이 화면에 비밀번호가 표시되지 않은 경우, 예약 메시지(Airbnb, Booking.com 등)로 고객센터에서 보내 드립니다. 응대 시간은 10:00~22:00이며, 22시 이후 결제는 다음 날 아침에 안내해 드립니다.", placeLabel:"BBQ 장비 보관 장소",
     noPin:"보관함 잠금은 없습니다. 이용 방법은 현장의 안내문을 확인해 주세요.",
     manualBtn:"BBQ 매뉴얼 보기", roomLabel:"객실",
     foot:"민박 운영 · Inbound Inc." }
@@ -187,6 +198,13 @@ function apply(lang){
   } else {
     $("pinCard").hidden = true; $("noPinCard").hidden = false;
   }
+  // place of the equipment (shared data: props.js)
+  const BP = (window.BBQ_PROPS||{})[p];
+  let ptxt = "";
+  if(BP){ const sr = BP.storeRooms && r && BP.storeRooms[r]; const st = sr || BP.store; if(st) ptxt = st[lang] || st.en || st.ja || ""; }
+  $("placeCard").hidden = !ptxt;
+  $("placeText").textContent = ptxt;
+  if(ptxt && BP && BP.storePhoto){ $("placeImg").hidden=false; $("placeImg").src = BP.storePhoto; $("placeImg").alt = ptxt; } else { $("placeImg").hidden = true; }
   // payment reference (if Square adds one to this page's address)
   const u = new URLSearchParams(location.search);
   const ref = u.get("orderId") || u.get("transactionId") || u.get("checkoutId") || u.get("referenceId") || "";
