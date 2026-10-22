@@ -60,6 +60,11 @@ main{padding-block:30px 48px}
 .pincard .pl{font-size:12.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--sea-ink)}
 .pincard .pv{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:52px; letter-spacing:.14em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:6px; line-height:1.1}
 .pincard .ph{font-size:13.5px; color:var(--ink-soft); margin-top:8px}
+.place{margin-top:14px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; text-align:left}
+.place .pl{font-size:12.5px; font-weight:700; letter-spacing:.1em; color:var(--sea-ink)}
+.place .pt{font-size:15px; font-weight:700; line-height:1.6; margin-top:6px}
+.place img{margin-top:10px; width:100%; border-radius:12px; border:1px solid var(--line); display:block}
+.retry{margin-top:12px; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:12px; padding:12px 16px; font:inherit; font-weight:700; font-size:14px; cursor:pointer; width:100%}
 .pincard.nopin{background:var(--ember-bg); border-color:color-mix(in srgb,var(--ember) 30%,var(--line))}
 .pincard.nopin .np{color:var(--ember-ink); font-size:15px; font-weight:700; line-height:1.55}
 
@@ -93,9 +98,16 @@ main{padding-block:30px 48px}
     <div class="pl" data-t="pinLabel"></div>
     <div class="pv" id="pinValue"></div>
     <div class="ph" data-t="pinHelp"></div>
+    <button class="retry" id="retryBtn" type="button" hidden data-t="retry"></button>
   </div>
   <div class="pincard nopin" id="noPinCard" hidden>
     <div class="np" data-t="noPin"></div>
+  </div>
+
+  <div class="place" id="placeCard" hidden>
+    <div class="pl" data-t="placeLabel"></div>
+    <div class="pt" id="placeText"></div>
+    <img id="placeImg" hidden alt="">
   </div>
 
   <a class="mbtn" id="manualBtn" href="#"><span data-t="manualBtn"></span><span>→</span></a>
@@ -104,25 +116,26 @@ main{padding-block:30px 48px}
   <p class="foot" data-t="foot"></p>
 </main>
 
+<script src="props.js"></script>
 <script>
 const T = {
   ja:{ brand:"BBQ｜お支払い完了", thanks:"お支払いありがとうございました", done:"BBQ機材の決済が完了しました。",
-    pinLabel:"保管庫の暗証番号について", pinHelp:"保管庫の暗証番号は、ご予約のメッセージ（Airbnb・Booking.comなど）でCSからお送りします。受付は10:00〜22:00です。22時以降のお支払いは翌朝のご連絡になります。",
+    pinLabel:"保管庫の暗証番号について", pinHelp:"お支払いの確認が終わると、ここに暗証番号が出ます。出ないときは少し待ってから「もう一度確認する」を押してください。", noOrder:"暗証番号は、Squareでのお支払いが終わった直後のこの画面に出ます。画面を閉じてしまった場合は、ブラウザの履歴からお支払い後の画面を開き直してください。", retry:"もう一度確認する", placeLabel:"BBQ機材の置き場所",
     noPin:"保管庫の鍵はありません。ご利用方法は現地の張り紙をご確認ください。",
     manualBtn:"BBQマニュアルを見る", roomLabel:"お部屋",
     foot:"民泊運営 インバウンド株式会社" },
   en:{ brand:"BBQ · Payment complete", thanks:"Thank you for your payment", done:"Your BBQ equipment payment is complete.",
-    pinLabel:"About the storage passcode", pinHelp:"Our support team will send the storage passcode through your booking messages (Airbnb, Booking.com, etc.). Support hours are 10:00–22:00; payments made after 22:00 will be answered the next morning.",
+    pinLabel:"About the storage passcode", pinHelp:"Your storage passcode appears here once your payment is confirmed. If it does not, wait a moment and tap \"Check again\".", noOrder:"The passcode is shown on this screen right after you pay on Square. If you closed it, reopen the page from your browser history.", retry:"Check again", placeLabel:"Where the BBQ equipment is",
     noPin:"There is no storage lock. Please follow the printed notice on site.",
     manualBtn:"View the BBQ manual", roomLabel:"Room",
     foot:"Minpaku Operations · Inbound Inc." },
   zh:{ brand:"BBQ · 付款完成", thanks:"感謝您的付款", done:"BBQ器材的付款已完成。",
-    pinLabel:"關於保管箱密碼", pinHelp:"保管箱密碼將由客服透過您的訂房訊息（Airbnb、Booking.com 等）傳送給您。客服時間為 10:00–22:00，22:00 以後的付款將於隔天早上回覆。",
+    pinLabel:"關於保管箱密碼", pinHelp:"付款確認後，保管箱密碼會顯示在這裡。若未顯示，請稍候再按「再次確認」。", noOrder:"密碼會在您於Square付款後的這個畫面上顯示。若已關閉畫面，請從瀏覽器的瀏覽紀錄重新開啟付款後的頁面。", retry:"再次確認", placeLabel:"BBQ器材的存放位置",
     noPin:"無保管箱鎖。使用方式請參考現場張貼的說明。",
     manualBtn:"查看BBQ指南", roomLabel:"房間",
     foot:"民宿營運 · Inbound Inc." },
   ko:{ brand:"BBQ · 결제 완료", thanks:"결제해 주셔서 감사합니다", done:"BBQ 장비 결제가 완료되었습니다.",
-    pinLabel:"보관함 비밀번호 안내", pinHelp:"보관함 비밀번호는 예약 메시지(Airbnb, Booking.com 등)로 고객센터에서 보내 드립니다. 응대 시간은 10:00~22:00이며, 22시 이후 결제는 다음 날 아침에 안내해 드립니다.",
+    pinLabel:"보관함 비밀번호 안내", pinHelp:"결제가 확인되면 이곳에 보관함 비밀번호가 표시됩니다. 표시되지 않으면 잠시 후 「다시 확인」을 눌러 주세요.", noOrder:"비밀번호는 Square 결제 직후의 이 화면에 표시됩니다. 화면을 닫으셨다면 브라우저 방문 기록에서 결제 후 화면을 다시 열어 주세요.", retry:"다시 확인", placeLabel:"BBQ 장비 보관 장소",
     noPin:"보관함 잠금은 없습니다. 이용 방법은 현장의 안내문을 확인해 주세요.",
     manualBtn:"BBQ 매뉴얼 보기", roomLabel:"객실",
     foot:"민박 운영 · Inbound Inc." }
@@ -137,7 +150,7 @@ const T2 = {
 };
 const PIN_API = "https://hook.us2.make.com/mgqcqwfbg47bn0axloy2ujjepsaj9naf";
 let PIN = null, PINSTATE = "idle", CUR = "ja";
-/* passcodes are NOT kept in this public page (2026-10-20). CS sends them after checking the Square payment. 526 has no lockbox -> on-site notice. */
+/* passcodes are NOT kept in this public page (2026-10-20). They are shown only after Make 6694632 checks the Square order (?orderId=). CS does not send them (2026-10-22). 526 has no lockbox -> on-site notice. */
 const PROPS = {
   "526":   { name:{ja:"Villa HI inn 526",en:"Villa HI inn 526",zh:"Villa HI inn 526",ko:"Villa HI inn 526"} },
   kiseki:  { name:{ja:"キセキハウス",en:"Kiseki House",zh:"Kiseki House",ko:"Kiseki House"} },
@@ -187,6 +200,13 @@ function apply(lang){
   } else {
     $("pinCard").hidden = true; $("noPinCard").hidden = false;
   }
+  // place of the equipment (shared data: props.js)
+  const BP = (window.BBQ_PROPS||{})[p];
+  let ptxt = "";
+  if(BP){ const sr = BP.storeRooms && r && BP.storeRooms[r]; const st = sr || BP.store; if(st) ptxt = st[lang] || st.en || st.ja || ""; }
+  $("placeCard").hidden = !ptxt;
+  $("placeText").textContent = ptxt;
+  if(ptxt && BP && BP.storePhoto){ $("placeImg").hidden=false; $("placeImg").src = BP.storePhoto; $("placeImg").alt = ptxt; } else { $("placeImg").hidden = true; }
   // payment reference (if Square adds one to this page's address)
   const u = new URLSearchParams(location.search);
   const ref = u.get("orderId") || u.get("transactionId") || u.get("checkoutId") || u.get("referenceId") || "";
@@ -201,16 +221,40 @@ function apply(lang){
 document.querySelectorAll(".langs button").forEach(b=> b.addEventListener("click", ()=>apply(b.dataset.lang)));
 let start="ja"; try{ const s=localStorage.getItem("bbqlang"); if(s&&T[s]) start=s; }catch(e){}
 apply(start);
+const SAVEKEY = "bbqpin";
+function hasOrder(){ const u=new URLSearchParams(location.search); return !!(u.get("orderId")||""); }
+function showRetry(){
+  const {p} = getParams();
+  const btn = $("retryBtn");
+  btn.hidden = !(hasOrder() && p && p!=="526" && !PIN && PINSTATE==="done");
+  if(!PIN && PINSTATE!=="loading" && p && p!=="526"){
+    const d = T[CUR]||T.ja;
+    $("pinCard").querySelector(".ph").textContent = hasOrder() ? d.pinHelp : d.noOrder;
+  }
+}
+function check(oid, p, r, tries){
+  PINSTATE = "loading"; apply(CUR); showRetry();
+  fetch(PIN_API + "?orderId=" + encodeURIComponent(oid))
+    .then(x => x.json())
+    .then(j => { if(j && j.ok && j.pin && j.pin !== "none"){ PIN = String(j.pin);
+      try{ localStorage.setItem(SAVEKEY, JSON.stringify({p, r, oid, pin:PIN, t:Date.now()})); }catch(e){} } })
+    .catch(() => {})
+    .finally(() => { PINSTATE = "done"; apply(CUR); showRetry();
+      if(!PIN && tries > 1) setTimeout(() => check(oid, p, r, tries-1), 4000); });
+}
 (function(){
   const u = new URLSearchParams(location.search);
   const oid = u.get("orderId") || "";
-  const {p} = getParams();
-  if(!oid || !p || p === "526") return;
-  PINSTATE = "loading"; apply(CUR);
-  fetch(PIN_API + "?orderId=" + encodeURIComponent(oid))
-    .then(r => r.json())
-    .then(j => { if(j && j.ok && j.pin && j.pin !== "none") PIN = String(j.pin); })
-    .catch(() => {})
-    .finally(() => { PINSTATE = "done"; apply(CUR); });
+  const {p, r} = getParams();
+  if(!p || p === "526") return;
+  if(!oid){
+    // reopened without the order number: show the passcode saved on this phone (same property, within 3 days)
+    try{ const s = JSON.parse(localStorage.getItem(SAVEKEY)||"null");
+      if(s && s.p===p && (!r || !s.r || s.r===r) && Date.now()-s.t < 3*864e5){ PIN = s.pin; } }catch(e){}
+    PINSTATE = "done"; apply(CUR); showRetry(); return;
+  }
+  check(oid, p, r, 3);
+  $("retryBtn").addEventListener("click", () => check(oid, p, r, 1));
 })();
+document.querySelectorAll(".langs button").forEach(b=> b.addEventListener("click", showRetry));
 </script>
